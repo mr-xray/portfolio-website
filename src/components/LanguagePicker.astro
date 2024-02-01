@@ -1,0 +1,23 @@
+---
+import { languages } from "../i18n/ui";
+import { getRelativeLocaleUrl, getPathByLocale } from "astro:i18n";
+import {
+  getLangFromUrl,
+  useTranslations,
+  removeLangFromUrl,
+} from "../i18n/utils";
+
+const currentPath = Astro.url;
+const changeLang = (lang: string) =>
+  getRelativeLocaleUrl(lang, removeLangFromUrl(currentPath));
+---
+
+<ul>
+  {
+    Object.entries(languages).map(([lang, label]) => (
+      <li>
+        <a href={changeLang(lang)}>{label}</a>
+      </li>
+    ))
+  }
+</ul>
