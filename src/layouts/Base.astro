@@ -4,15 +4,19 @@ import { locale, determineLocale } from "../service/language";
 interface Props {
   title: string;
   description?: string;
+  keywords?: string[];
+  author?: string;
 }
 determineLocale(Astro.url, Astro.preferredLocale);
-const { title, description } = Astro.props;
+const { title, description, keywords, author } = Astro.props;
 ---
 
 <html lang={locale.get()}>
   <head>
     <meta charset="utf-8" />
     {description && <meta name="description" content={description} />}
+    {keywords && <meta name="keywords" content={keywords.join(", ")} />}
+    {author && <meta name="author" content={author} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />

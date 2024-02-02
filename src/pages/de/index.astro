@@ -1,9 +1,29 @@
 ---
 import Nav from "../../components/Nav.astro";
 import Base from "../../layouts/Base.astro";
+
+const props = {
+  title: "Bernhard Steirer",
+  description: "Meine persönliche Portfolio-Website.",
+  keywords: [
+    "Resume",
+    "Portfolio",
+    "Developer",
+    "Astro",
+    "Physik",
+    "Entwickler",
+    "Software",
+  ],
+  author: "Bernhard Steirer",
+};
 ---
 
-<Base title="Bernhard Steirer">
+<Base
+  title={props.title}
+  description={props.description}
+  author={props.author}
+  keywords={props.keywords}
+>
   <main>
     <Nav />
     <div>soos</div>

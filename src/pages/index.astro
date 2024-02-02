@@ -4,17 +4,30 @@ import Base from "../layouts/Base.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { locale, determineLocale } from "../service/language";
 
-interface Props {
-  title: string;
-  description?: string;
-}
+const props = {
+  title: "Bernhard Steirer",
+  description: "This is my personal portfolio website.",
+  keywords: [
+    "Resume",
+    "Portfolio",
+    "Developer",
+    "Astro",
+    "Physics",
+    "Software",
+  ],
+  author: "Bernhard Steirer",
+};
 determineLocale(Astro.url, Astro.preferredLocale);
 console.log("default was to be " + getRelativeLocaleUrl(locale.get(), "/"));
-const { title, description } = Astro.props;
 Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={props.title}
+  description={props.description}
+  author={props.author}
+  keywords={props.keywords}
+>
   <main>
     <Nav />
     <div>soos</div>

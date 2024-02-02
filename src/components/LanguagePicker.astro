@@ -1,15 +1,21 @@
 ---
 import { languages, ui } from "../i18n/ui";
-import {} from "astro:i18n";
+import { locale } from "../service/language";
 import { translateURL } from "../i18n/utils";
+
+const langu = locale.get();
 ---
 
-<ul>
-  {
-    Object.entries(languages).map(([lang, label]) => (
-      <li>
-        <a href={translateURL(Astro.url, lang as keyof typeof ui)}>{label}</a>
-      </li>
-    ))
-  }
-</ul>
+{
+  Object.entries(languages).map(([lang, label], index, array) => (
+    <>
+      <a
+        class={langu == lang ? "font-bold" : undefined}
+        href={translateURL(Astro.url, lang as keyof typeof ui)}
+      >
+        {label}
+      </a>
+      {index < array.length - 1 && " / "}
+    </>
+  ))
+}

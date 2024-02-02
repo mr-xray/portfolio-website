@@ -4,20 +4,57 @@ import { ui } from "../i18n/ui";
 import { locale } from "../service/language";
 import { useTranslations } from "../i18n/utils";
 import LanguagePicker from "./LanguagePicker.astro";
+import { Image } from "astro:assets";
+
+import githubSVG from "../images/svg/github-mark.svg";
+import linkedInSVG from "../images/svg/linkedin-mark.svg";
+import discordSVG from "../images/svg/discord-mark.svg";
+import aboutSVG from "../images/svg/nav/about-icon.svg";
+import physicsSVG from "../images/svg/nav/physics-icon.svg";
+import blogSVG from "../images/svg/nav/blog-icon.svg";
+import softwareSVG from "../images/svg/nav/software-icon.svg";
+
+const githubLink = "https://github.com/mr-xray";
+const discordLink = "https://discordapp.com/users/472479669141372943";
+const linkedInLink = "https://www.linkedin.com/in/bernhard-steirer/";
 
 const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
-<div class="flex items-center justify-between w-11/12 mx-auto">
+<div class="flex flex-row items-center justify-between w-11/12 mx-auto">
   <div class="font-black text-xl">
     <a href={getRelativeLocaleUrl(locale.get(), "/")}>Bernhard Steirer</a>
+  </div>
+  <div
+    class="flex justify-between w-2/4 [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>div>img]:mx-1"
+  >
     <div>
+      <Image src={aboutSVG} alt="Person icon" width="20" height="20" />
       <a href={getRelativeLocaleUrl(locale.get(), "about")}>{t("nav.about")}</a>
     </div>
-    <div>{t("nav.dev")}</div>
-    <div>{t("nav.physics")}</div>
-    <div>{t("nav.blog")}</div>
+    <div>
+      <Image src={softwareSVG} alt="<>" width="20" height="20" />
+      {t("nav.dev")}
+    </div>
+    <div>
+      <Image src={physicsSVG} alt="Atom icon" width="20" height="20" />
+      {t("nav.physics")}
+    </div>
+    <div>
+      <Image src={blogSVG} alt="Book icon" width="20" height="20" />
+      {t("nav.blog")}
+    </div>
+    <div class="flex-row [&>*]:mx-1">
+      <a href={githubLink} target="_blank">
+        <Image src={githubSVG} alt="Github" width="20" height="20" />
+      </a>
+      <a href={discordLink} target="_blank">
+        <Image src={discordSVG} alt="Discord" width="20" height="20" />
+      </a>
+      <a href={linkedInLink} target="_blank">
+        <Image src={linkedInSVG} alt="LinkedIn" width="20" height="20" />
+      </a>
+    </div>
     <div><LanguagePicker /></div>
-    <div>Github</div>
   </div>
 </div>
