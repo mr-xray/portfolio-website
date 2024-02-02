@@ -1,9 +1,20 @@
 ---
 import Nav from "../components/Nav.astro";
 import Base from "../layouts/Base.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { locale, determineLocale } from "../service/language";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+determineLocale(Astro.url, Astro.preferredLocale);
+console.log("default was to be " + getRelativeLocaleUrl(locale.get(), "/"));
+const { title, description } = Astro.props;
+Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
 ---
 
-<Base title="Bernhard Steirer">
+<Base title={title} description={description}>
   <main>
     <Nav />
     <div>soos</div>

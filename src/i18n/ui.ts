@@ -3,7 +3,6 @@ export const languages = {
   de: "DE",
 };
 
-export const defaultLang = "en";
 export const showDefaultLang = false;
 
 export const ui = {
@@ -22,3 +21,5 @@ export const ui = {
     "nav.blog": "Blog",
   },
 } as const;
+
+export const defaultLang: keyof typeof ui = "en";

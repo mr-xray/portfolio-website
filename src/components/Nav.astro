@@ -1,17 +1,18 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { ui } from "../i18n/ui";
+import { locale } from "../service/language";
+import { useTranslations } from "../i18n/utils";
 import LanguagePicker from "./LanguagePicker.astro";
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
 <div class="flex items-center justify-between w-11/12 mx-auto">
   <div class="font-black text-xl">
-    <a href={getRelativeLocaleUrl(lang, "/")}>Bernhard Steirer</a>
+    <a href={getRelativeLocaleUrl(locale.get(), "/")}>Bernhard Steirer</a>
     <div>
-      <a href={getRelativeLocaleUrl(lang, "about")}>{t("nav.about")}</a>
+      <a href={getRelativeLocaleUrl(locale.get(), "about")}>{t("nav.about")}</a>
     </div>
     <div>{t("nav.dev")}</div>
     <div>{t("nav.physics")}</div>

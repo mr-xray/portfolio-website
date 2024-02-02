@@ -1,22 +1,14 @@
 ---
-import { languages } from "../i18n/ui";
-import { getRelativeLocaleUrl, getPathByLocale } from "astro:i18n";
-import {
-  getLangFromUrl,
-  useTranslations,
-  removeLangFromUrl,
-} from "../i18n/utils";
-
-const currentPath = Astro.url;
-const changeLang = (lang: string) =>
-  getRelativeLocaleUrl(lang, removeLangFromUrl(currentPath));
+import { languages, ui } from "../i18n/ui";
+import {} from "astro:i18n";
+import { translateURL } from "../i18n/utils";
 ---
 
 <ul>
   {
     Object.entries(languages).map(([lang, label]) => (
       <li>
-        <a href={changeLang(lang)}>{label}</a>
+        <a href={translateURL(Astro.url, lang as keyof typeof ui)}>{label}</a>
       </li>
     ))
   }
