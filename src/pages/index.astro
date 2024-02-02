@@ -18,7 +18,6 @@ const props = {
   author: "Bernhard Steirer",
 };
 determineLocale(Astro.url, Astro.preferredLocale);
-console.log("default was to be " + getRelativeLocaleUrl(locale.get(), "/"));
 Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
 ---
 

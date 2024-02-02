@@ -1,0 +1,11 @@
+---
+import { Image } from "astro:assets";
+
+import framePNG from "../images/png/frame.png";
+import portraitPNG from "../images/png/portrait.png";
+---
+
+<div class="w-10/12 relative flex justify-center align-middle top-5">
+  <Image class="absolute z-0" src={framePNG} alt="Frame" />
+  <Image class="absolute z-10 w-7/12" src={portraitPNG} alt="Portrait" />
+</div>
