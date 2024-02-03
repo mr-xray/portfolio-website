@@ -3,6 +3,7 @@ import Nav from "../components/Nav.astro";
 import Base from "../layouts/Base.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { locale, determineLocale } from "../service/language";
+import PersonalBanner from "../components/PersonalBanner.astro";
 
 const props = {
   title: "Bernhard Steirer",
@@ -29,6 +30,25 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
 >
   <main>
     <Nav />
-    <div>soos</div>
+    <div
+      class="w-11/12 flex justify-between [&>*]:h-full [&>*]:mx-8 float-right mt-10"
+    >
+      <div class="w-7/12 ml-15">
+        <h1 class="leading-normal text-5xl font-extrabold">
+          Hey there!<br />
+          My name is Bernhard
+        </h1>
+        <p class="text-lg leading-relaxed">
+          I am a software engineer, aspiring physics student at the Technical
+          University of Munich, passionate violinist and a lifelong learner.
+          <br />
+          <br />
+          I am currently doing an 11-month voluntary service in Tanzania to complete
+          my compulsory military service for Austria, always ready to embark on the
+          next great adventure.
+        </p>
+      </div>
+      <PersonalBanner />
+    </div>
   </main>
 </Base>

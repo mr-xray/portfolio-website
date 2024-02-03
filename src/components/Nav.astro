@@ -21,40 +21,136 @@ const linkedInLink = "https://www.linkedin.com/in/bernhard-steirer/";
 const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
-<div class="flex flex-row items-center justify-between w-11/12 mx-auto">
-  <div class="font-black text-xl">
-    <a href={getRelativeLocaleUrl(locale.get(), "/")}>Bernhard Steirer</a>
-  </div>
-  <div
-    class="flex justify-between w-2/4 [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>div>img]:mx-1"
-  >
-    <div>
-      <Image src={aboutSVG} alt="Person icon" width="20" height="20" />
-      <a href={getRelativeLocaleUrl(locale.get(), "about")}>{t("nav.about")}</a>
+<link
+  href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+  rel="stylesheet"
+/>
+<div class="w-full bg-background p-4">
+  <div class="flex flex-row items-center justify-between w-11/12 mx-auto">
+    <div class="font-black text-xl">
+      <a href={getRelativeLocaleUrl(locale.get(), "/")}>Bernhard Steirer</a>
     </div>
-    <div>
-      <Image src={softwareSVG} alt="<>" width="20" height="20" />
-      {t("nav.dev")}
+    <div
+      class="hidden lg:flex space-x-12 justify-between [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>div>img]:mx-1"
+    >
+      <div>
+        <Image src={aboutSVG} alt="Person icon" width="20" height="20" />
+        <a href={getRelativeLocaleUrl(locale.get(), "about")}
+          >{t("nav.about")}</a
+        >
+      </div>
+      <div>
+        <Image src={softwareSVG} alt="<>" width="20" height="20" />
+        {t("nav.dev")}
+      </div>
+      <div>
+        <Image src={physicsSVG} alt="Atom icon" width="20" height="20" />
+        {t("nav.physics")}
+      </div>
+      <div>
+        <Image src={blogSVG} alt="Book icon" width="20" height="20" />
+        {t("nav.blog")}
+      </div>
+      <div class="flex-row flex-shrink-0 [&>*]:mx-1">
+        <a href={githubLink} target="_blank">
+          <Image src={githubSVG} alt="Github" width="20" height="20" />
+        </a>
+        <a href={discordLink} target="_blank">
+          <Image src={discordSVG} alt="Discord" width="20" height="20" />
+        </a>
+        <a href={linkedInLink} target="_blank">
+          <Image src={linkedInSVG} alt="LinkedIn" width="20" height="20" />
+        </a>
+      </div>
+      <div><LanguagePicker /></div>
     </div>
-    <div>
-      <Image src={physicsSVG} alt="Atom icon" width="20" height="20" />
-      {t("nav.physics")}
+    <!-- Responsive Burger -->
+    <div class="flex lg:hidden navbar-burger space-x-10">
+      <div class="flex items-center justify-center">
+        <LanguagePicker />
+      </div>
+      <div class="relative flex place-items-center">
+        <i class="text-center absolute fas fa-bars cursor-pointer" id="opener"
+        ></i>
+      </div>
     </div>
-    <div>
-      <Image src={blogSVG} alt="Book icon" width="20" height="20" />
-      {t("nav.blog")}
-    </div>
-    <div class="flex-row [&>*]:mx-1">
-      <a href={githubLink} target="_blank">
-        <Image src={githubSVG} alt="Github" width="20" height="20" />
-      </a>
-      <a href={discordLink} target="_blank">
-        <Image src={discordSVG} alt="Discord" width="20" height="20" />
-      </a>
-      <a href={linkedInLink} target="_blank">
-        <Image src={linkedInSVG} alt="LinkedIn" width="20" height="20" />
-      </a>
-    </div>
-    <div><LanguagePicker /></div>
   </div>
 </div>
+<div
+  class="transition-all ease-in-out duration-300 w-80 fixed -top-0 -right-80 invisible z-50 flex flex-col justify-start
+  [&>*]:pl-5 [&>*]:p-2 [&>*]:flex [&>div>img]:mr-2 bg-white min-h-fit h-full text-lg shadow-[-2px_0_15px_0_rgba(0,0,0,0.2)]"
+  id="menu"
+>
+  <div>
+    <i class="text-center fas fa-times cursor-pointer text-xl" id="cancel"></i>
+  </div>
+  <div>
+    <Image src={aboutSVG} alt="Person icon" width="20" height="20" />
+    <a href={getRelativeLocaleUrl(locale.get(), "about")}>{t("nav.about")}</a>
+  </div>
+  <div>
+    <Image src={softwareSVG} alt="<>" width="20" height="20" />
+    {t("nav.dev")}
+  </div>
+  <div>
+    <Image src={physicsSVG} alt="Atom icon" width="20" height="20" />
+    {t("nav.physics")}
+  </div>
+  <div>
+    <Image src={blogSVG} alt="Book icon" width="20" height="20" />
+    {t("nav.blog")}
+  </div>
+  <div class="flex-row flex-shrink-0 [&>*]:mx-1">
+    <a href={githubLink} target="_blank">
+      <Image src={githubSVG} alt="Github" width="25" height="25" />
+    </a>
+    <a href={discordLink} target="_blank">
+      <Image src={discordSVG} alt="Discord" width="25" height="25" />
+    </a>
+    <a href={linkedInLink} target="_blank">
+      <Image src={linkedInSVG} alt="LinkedIn" width="25" height="25" />
+    </a>
+  </div>
+</div>
+<script>
+  function checkMenu(checked: boolean) {
+    const menu = document.getElementById("menu")!;
+    console.log(checked);
+    if (checked) {
+      menu.classList.add("menu-visible");
+    } else {
+      menu.classList.remove("menu-visible");
+    }
+  }
+
+  window.onresize = function () {
+    var w = window.outerWidth;
+    if (w > 1024) {
+      checkMenu(false);
+    }
+  };
+
+  document
+    .querySelectorAll("#cancel")
+    .forEach((element) =>
+      element.addEventListener("click", () => checkMenu(false)),
+    );
+
+  document
+    .querySelectorAll("#opener")
+    .forEach((element) =>
+      element.addEventListener("click", () => checkMenu(true)),
+    );
+</script>
+
+<style>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  @tailwind variants;
+
+  .menu-visible {
+    right: 0;
+    visibility: visible;
+  }
+</style>
