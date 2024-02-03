@@ -25,26 +25,34 @@ const props = {
   author={props.author}
   keywords={props.keywords}
 >
-  <main>
-    <Nav />
-    <div
-      class="w-11/12 flex justify-between [&>*]:h-full [&>*]:mx-8 float-right mt-10"
-    >
-      <div class="w-7/12 ml-15">
-        <h1 class="leading-normal text-5xl font-extrabold">
-          Hi!<br />
-          Ich bin Bernhard
-        </h1>
-        <p class="text-lg leading-relaxed">
-          Ich bin Software-Engineer, angehender Physik-Student an der TU
-          München, leidenschaftlicher Geiger und ein lebenslanger Lerner.
-          <br />
-          <br />
-          Gerade absolviere ich meinen elfmonatigen Zivilersatzdienst in Tansania,
-          bin aber immer auf der Suche nach dem nächsten Abenteuer.
-        </p>
+  <Nav />
+  <div
+    class="-z-10 w-11/12 bg-gray mx-auto flex justify-between [&>*]:mx-8 pt-10"
+  >
+    <main>
+      <div
+        class="-z-10 w-11/12 mx-auto flex justify-between [&>*]:mx-8 pt-10 mb-4"
+      >
+        <div
+          class="w-full lg:w-9/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+        >
+          <h1
+            class="leading-normal font-serif xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl font-bold text-xl"
+          >
+            Hi!<br />
+            Ich bin Bernhard
+          </h1>
+          <p class="lg:text-lg text-base leading-relaxed">
+            Ich bin Software-Engineer, angehender Physik-Student an der TU
+            München, leidenschaftlicher Geiger und ein lebenslanger Lerner.
+            <br />
+            <br />
+            Gerade absolviere ich meinen elfmonatigen Zivilersatzdienst in Tansania,
+            bin aber immer auf der Suche nach dem nächsten Abenteuer.
+          </p>
+        </div>
+        <PersonalBanner />
       </div>
-      <PersonalBanner />
-    </div>
-  </main>
+    </main>
+  </div>
 </Base>

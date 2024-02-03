@@ -1,9 +1,9 @@
 ---
 import Nav from "../components/Nav.astro";
-import Base from "../layouts/Base.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { locale, determineLocale } from "../service/language";
 import PersonalBanner from "../components/PersonalBanner.astro";
+import Base from "../layouts/Base.astro";
 
 const props = {
   title: "Bernhard Steirer",
@@ -28,27 +28,35 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
   author={props.author}
   keywords={props.keywords}
 >
-  <main>
-    <Nav />
-    <div
-      class="w-11/12 flex justify-between [&>*]:h-full [&>*]:mx-8 float-right mt-10"
-    >
-      <div class="w-7/12 ml-15">
-        <h1 class="leading-normal text-5xl font-extrabold">
-          Hey there!<br />
-          My name is Bernhard
-        </h1>
-        <p class="text-lg leading-relaxed">
-          I am a software engineer, aspiring physics student at the Technical
-          University of Munich, passionate violinist and a lifelong learner.
-          <br />
-          <br />
-          I am currently doing an 11-month voluntary service in Tanzania to complete
-          my compulsory military service for Austria, always ready to embark on the
-          next great adventure.
-        </p>
+  <Nav />
+  <div
+    class="-z-10 w-11/12 bg-gray mx-auto flex justify-between [&>*]:mx-8 pt-10"
+  >
+    <main>
+      <div
+        class="-z-10 w-11/12 mx-auto flex justify-between [&>*]:mx-8 pt-10 mb-4"
+      >
+        <div
+          class="w-full lg:w-7/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+        >
+          <h1
+            class="leading-normal font-serif xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl font-bold text-xl"
+          >
+            Hey there!<br />
+            My name is Bernhard
+          </h1>
+          <p class="lg:text-lg text-base leading-relaxed">
+            I am a software engineer, aspiring physics student at the Technical
+            University of Munich, passionate violinist and a lifelong learner.
+            <br />
+            <br />
+            I am currently doing an 11-month voluntary service in Tanzania to complete
+            my compulsory military service for Austria, always ready to embark on
+            the next great adventure.
+          </p>
+        </div>
+        <PersonalBanner />
       </div>
-      <PersonalBanner />
-    </div>
-  </main>
+    </main>
+  </div>
 </Base>
