@@ -13,7 +13,6 @@ export const locale = atom(defaultLang);
 
 export const determineLocale = (url: URL, preferredLocale?: string) => {
   const urlLang: keyof typeof ui | null = getLangFromUrl(url);
-  console.log("url is -> " + urlLang + " from " + url.pathname);
   if (!urlLang) {
     locale.set(
       preferredLocale && preferredLocale in ui

@@ -1,0 +1,43 @@
+---
+const {
+  imageUploadEndpoint = Astro.url.origin + "/api/images/upload.multipart",
+} = Astro.props;
+---
+
+<p>{imageUploadEndpoint}</p>
+<url-uploadable data-url={imageUploadEndpoint}>
+  <form id="upload-form">
+    <label for="file">File</label>
+    <input type="file" id="file" name="file" multiple />
+    <input id="postSubmit" type="submit" value="Send Me!" />
+  </form>
+</url-uploadable>
+
+<script>
+  class Uploadable extends HTMLElement {
+    url: string | undefined;
+    constructor() {
+      super();
+      this.url = this.dataset.url;
+    }
+  }
+
+  customElements.define("url-uploadable", Uploadable);
+  const uploadForm = document.getElementById("upload-form") as HTMLFormElement;
+  const uploadable: Uploadable = document.querySelector(
+    "url-uploadable",
+  ) as any as Uploadable;
+  uploadForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const formData = new FormData(uploadForm);
+    const response = await fetch(uploadable.url!, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer soosasdf",
+      },
+      body: formData,
+    });
+
+    const result = await response.json();
+  });
+</script>

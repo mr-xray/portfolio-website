@@ -12,6 +12,12 @@ export const ui = {
     "nav.physics": "Physics",
     "nav.dev": "Software",
     "nav.blog": "Blog",
+    "pics.me": "Me & Friends",
+    "pics.tanzania": "Tanzania",
+    "pics.pets": "Pets",
+    "pics.hobbies": "Hobbies",
+    "pics.scenery": "Scenery",
+    "pics.other": "Other",
   },
   de: {
     "nav.home": "Home",
@@ -19,6 +25,12 @@ export const ui = {
     "nav.physics": "Physik",
     "nav.dev": "Software",
     "nav.blog": "Blog",
+    "pics.me": "Ich",
+    "pics.tanzania": "Tansania",
+    "pics.pets": "Tiere",
+    "pics.hobbies": "Hobbys",
+    "pics.scenery": "Landschaft",
+    "pics.other": "Sonstiges",
   },
 } as const;
 

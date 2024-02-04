@@ -1,0 +1,18 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  imagePath: string;
+  altText: string;
+  name: string;
+  age: number;
+  location?: string;
+}
+
+const { imagePath, altText, name, age } = Astro.props;
+---
+
+<div class="card">
+  <h2>{name}</h2>
+  <p>Age: {age}</p>
+</div>
