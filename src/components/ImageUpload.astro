@@ -1,15 +1,66 @@
 ---
+import { ui } from "../i18n/ui";
+import { locale } from "../service/language";
+import { useTranslations } from "../i18n/utils";
+
+const t = useTranslations(locale.get() as keyof typeof ui);
+
 const {
   imageUploadEndpoint = Astro.url.origin + "/api/images/upload.multipart",
 } = Astro.props;
 ---
 
-<p>{imageUploadEndpoint}</p>
 <url-uploadable data-url={imageUploadEndpoint}>
   <form id="upload-form">
-    <label for="file">File</label>
-    <input type="file" id="file" name="file" multiple />
-    <input id="postSubmit" type="submit" value="Send Me!" />
+    <fieldset>
+      <legend>Image category:</legend>
+      {
+        Object.entries(ui[locale.get()])
+          .filter(([key, label]) => key.startsWith("pics"))
+          .map(([key, label], index, array) => (
+            <>
+              <div>
+                {index == 0 && (
+                  <input type="radio" name="category" value={key} checked />
+                )}
+                {index != 0 && (
+                  <input type="radio" name="category" value={key} />
+                )}
+                <label for="category">{label}</label>
+              </div>
+            </>
+          ))
+      }
+    </fieldset>
+    <br />
+    <div
+      id="drop-container"
+      class="flex justify-center align-middle items-center h-52 border-foreground border"
+    >
+      <p id="files-selected">Drop here</p>
+    </div>
+    <label for="file"
+      ><div
+        class="p-4 w-min inline-block cursor-pointer my-4 mr-2 bg-foreground font-bold text-white"
+      >
+        Browse
+      </div>
+      <input class="hidden" type="file" id="file" name="file" multiple />
+    </label>
+
+    <label for="post-submit">
+      <div
+        class="p-4 w-min inline-block cursor-pointer my-4 mr-2 bg-foreground font-bold text-white"
+      >
+        Upload
+        <input id="post-submit" type="submit" class="hidden" />
+      </div>
+    </label>
+    <div
+      class="p-4 inline-block my-4 mr-2 border-foreground border font-bold text-foreground"
+    >
+      <p id="cdn-response">Awaiting CDN response...</p>
+    </div>
   </form>
 </url-uploadable>
 
@@ -39,5 +90,29 @@ const {
     });
 
     const result = await response.json();
+  });
+</script>
+
+<script>
+  const dropContainer: HTMLElement = document.getElementById("drop-container")!;
+  const fileDisplay: HTMLElement = document.getElementById("files-selected")!;
+  const input: HTMLInputElement = document.getElementById(
+    "file",
+  ) as HTMLInputElement;
+  function preventDefault(evt: Event) {
+    evt.preventDefault();
+  }
+  dropContainer.addEventListener("dragover", preventDefault);
+  dropContainer.addEventListener("dragenter", preventDefault);
+  dropContainer.addEventListener("drop", (evt: Event) => {
+    (document.getElementById("file")! as HTMLInputElement).files = (
+      evt as DragEvent
+    ).dataTransfer!.files;
+    fileDisplay.innerText = input.files?.length + " file(s) selected";
+    evt.preventDefault();
+  });
+
+  input.addEventListener("change", (event) => {
+    fileDisplay.innerText = input.files?.length + " file(s) selected";
   });
 </script>
