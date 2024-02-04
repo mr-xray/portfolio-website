@@ -7,8 +7,13 @@ let cdn = atom(null as any);
 export const POST: APIRoute = async ({ request }) => {
   const uploadResponses = [];
   const formData: FormData = await request.formData();
-  for (let image of formData) {
-    if (image[0] != "file") {
+  let category: string | undefined;
+  for (let input of formData) {
+    if (!category && input[0] == "category" && input[1]) {
+      category = input[1] as string;
+      continue;
+    }
+    if (input[0] != "file") {
       return new Response(
         JSON.stringify({
           message: "All form entries must be of type file!",
@@ -18,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
         },
       );
     }
-    if ((image[1] as any as File).type.split("/")[0] !== "image") {
+    if ((input[1] as any as File).type.split("/")[0] !== "image") {
       return new Response(
         JSON.stringify({
           message: "All files must be of type image!",
@@ -28,14 +33,16 @@ export const POST: APIRoute = async ({ request }) => {
         },
       );
     }
-    uploadResponses.push(await uploadToCloudify(image[1] as any as File));
+    uploadResponses.push(
+      await uploadToCloudify(input[1] as any as File, category ?? "pics.other"),
+    );
   }
   return new Response(
     JSON.stringify(uploadResponses.map((res) => res?.public_id)),
   );
 };
 
-async function uploadToCloudify(image: File) {
+async function uploadToCloudify(image: File, category: string) {
   if (!cdn.get()) {
     const config = cloudinary.config({
       cloud_name: import.meta.env.CDN_CLOUD_NAME,
@@ -45,7 +52,10 @@ async function uploadToCloudify(image: File) {
     cdn.set(config);
   }
   let base64 = await fileToBase64(image);
-  return await cloudinary.uploader.upload("data:image/png;base64," + base64);
+  return await cloudinary.uploader.upload("data:image/png;base64," + base64, {
+    folder: import.meta.env.CDN_FOLDER,
+    tags: category,
+  });
 }
 
 async function fileToBase64(file: File) {

@@ -57,9 +57,10 @@ const {
       </div>
     </label>
     <div
-      class="p-4 inline-block my-4 mr-2 border-foreground border font-bold text-foreground"
+      id="cdn-response"
+      class="hidden p-4 my-4 mr-2 border-foreground border font-bold text-foreground"
     >
-      <p id="cdn-response">Awaiting CDN response...</p>
+      <p>Awaiting CDN...</p>
     </div>
   </form>
 </url-uploadable>
@@ -78,9 +79,26 @@ const {
   const uploadable: Uploadable = document.querySelector(
     "url-uploadable",
   ) as any as Uploadable;
+  const dropContainer: HTMLElement = document.getElementById("drop-container")!;
+  const fileDisplay: HTMLElement = document.getElementById("files-selected")!;
+  const input: HTMLInputElement = document.getElementById(
+    "file",
+  ) as HTMLInputElement;
+
+  if (input.files?.length != 0) {
+    fileDisplay.innerText = input.files?.length + " file(s) selected";
+  }
+
   uploadForm.addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(uploadForm);
+    console.log(input.files);
+    if (input.files?.length == 0) {
+      fileDisplay.innerText = "Please select files!";
+      return;
+    }
+    document.getElementById("cdn-response")?.classList.remove("hidden");
+    document.getElementById("cdn-response")?.classList.add("inline-block");
     const response = await fetch(uploadable.url!, {
       method: "POST",
       headers: {
@@ -90,15 +108,10 @@ const {
     });
 
     const result = await response.json();
+    document.getElementById("cdn-response")?.classList.add("hidden");
+    document.getElementById("cdn-response")?.classList.remove("inline-block");
   });
-</script>
 
-<script>
-  const dropContainer: HTMLElement = document.getElementById("drop-container")!;
-  const fileDisplay: HTMLElement = document.getElementById("files-selected")!;
-  const input: HTMLInputElement = document.getElementById(
-    "file",
-  ) as HTMLInputElement;
   function preventDefault(evt: Event) {
     evt.preventDefault();
   }
