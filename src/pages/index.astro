@@ -30,14 +30,17 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
 >
   <Nav />
   <div
-    class="-z-10 w-11/12 bg-gray mx-auto flex justify-between [&>*]:mx-8 pt-10"
+    class="relative -z-50 w-full md:w-11/12 lg:bg-gray mx-auto flex justify-between md:[&>*]:mx-8 md:pt-10"
   >
     <main>
+      <div class="w-full flex lg:hidden px-5 max-w-full h-0">
+        <PersonalBanner />
+      </div>
       <div
-        class="-z-10 w-11/12 mx-auto flex justify-between [&>*]:mx-8 pt-10 mb-4"
+        class="w-11/12 mx-auto flex justify-between md:[&>*]:mx-8 md:pt-10 mb-4"
       >
         <div
-          class="w-full lg:w-7/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+          class="w-full lg:w-7/12 lg:mt-0 mt-96 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
         >
           <h1
             class="leading-normal font-serif xl:text-5xl lg:text-4xl md:text-3xl sm:text-2xl font-bold text-xl"
@@ -54,8 +57,16 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
             my compulsory military service for Austria, always ready to embark on
             the next great adventure.
           </p>
+          <button class="p-4 my-4 mr-2 bg-foreground font-bold text-white"
+            >Let's talk</button
+          >
+          <button class="p-4 my-4 bg-foreground font-bold text-white"
+            >My projects</button
+          >
         </div>
-        <PersonalBanner />
+        <div class="w-full hidden lg:flex">
+          <PersonalBanner />
+        </div>
       </div>
     </main>
   </div>
