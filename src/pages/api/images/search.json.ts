@@ -1,40 +1,42 @@
 import type { APIRoute } from "astro";
 import { fetchFolder } from "../../../service/cdn";
+import { ui } from "../../../i18n/ui";
 
-/*export const GET: APIRoute = async ({ params, request }) => {
-  const uploadResponses = [];
-  const formData: FormData = await request.formData();
-  let category: string | undefined;
-  for (let input of formData) {
-    if (!category && input[0] == "category" && input[1]) {
-      category = input[1] as string;
-      continue;
-    }
-    if (input[0] != "file") {
-      return new Response(
-        JSON.stringify({
-          message: "All form entries must be of type file!",
-        }),
-        {
-          status: 422,
-        },
-      );
-    }
-    if ((input[1] as any as File).type.split("/")[0] !== "image") {
-      return new Response(
-        JSON.stringify({
-          message: "All files must be of type image!",
-        }),
-        {
-          status: 422,
-        },
-      );
-    }
-    uploadResponses.push(
-      await uploadToCloudify(input[1] as any as File, category ?? "pics.other"),
-    );
+export const GET: APIRoute = async ({ params, request }) => {
+  if (!request.url.includes("?")) {
+    return new Response(null, {
+      status: 400,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
   }
-  return new Response(
-    JSON.stringify(uploadResponses.map((res) => res?.public_id)),
+  let category = new URLSearchParams(request.url.split("?")[1]).get("category");
+  if (
+    !category ||
+    !Object.keys(ui.en).includes(category) ||
+    !category.startsWith("pics.")
+  ) {
+    return new Response("Category is missing!", {
+      status: 422,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  }
+
+  const cloudinaryResult = await fetchFolder(
+    import.meta.env.CDN_FOLDER,
+    ["image", category],
+    "image",
+    10,
   );
-};*/
+  let urls = cloudinaryResult.resources;
+  urls = urls.map((element: any) => element.secure_url);
+  return new Response(JSON.stringify(urls), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

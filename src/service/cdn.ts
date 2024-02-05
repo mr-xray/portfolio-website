@@ -19,10 +19,14 @@ export async function fetchFolder(
   max_results: number,
 ) {
   ensureConfig();
+  console.log(
+    `resource_type:${resource_type} AND folder=${folder}` +
+      (tags.length > 0 ? " AND tags=" + tags.join(", ") : ""),
+  );
   return cloudinary.search
     .expression(
       `resource_type:${resource_type} AND folder=${folder}` +
-        (tags.length > 0 ? tags.join("AND tags=") : ""),
+        (tags.length > 0 ? " AND tags=" + tags.join(", ") : ""),
     )
     .sort_by("uploaded_at", "desc")
     .max_results(max_results)
