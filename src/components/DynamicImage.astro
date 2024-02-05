@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { v2 as cloudinary } from "cloudinary";
 
 interface Props {
   imagePath: string;
@@ -10,6 +11,12 @@ interface Props {
 }
 
 const { imagePath, altText, name, age } = Astro.props;
+cloudinary.search
+  .expression("resource_type:image AND tags=image AND folder=bernhardsteirer")
+  .sort_by("uploaded_at", "desc")
+  .max_results(10)
+  .execute()
+  .then((result) => console.log(result));
 ---
 
 <div class="card">

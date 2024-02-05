@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
-import { uploadToCloudify } from "../../../service/cdn";
+import { fetchFolder } from "../../../service/cdn";
 
-export const POST: APIRoute = async ({ request }) => {
+/*export const GET: APIRoute = async ({ params, request }) => {
   const uploadResponses = [];
   const formData: FormData = await request.formData();
   let category: string | undefined;
@@ -37,4 +37,4 @@ export const POST: APIRoute = async ({ request }) => {
   return new Response(
     JSON.stringify(uploadResponses.map((res) => res?.public_id)),
   );
-};
+};*/
