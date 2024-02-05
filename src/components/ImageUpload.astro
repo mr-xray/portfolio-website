@@ -99,17 +99,33 @@ const {
     }
     document.getElementById("cdn-response")?.classList.remove("hidden");
     document.getElementById("cdn-response")?.classList.add("inline-block");
-    const response = await fetch(uploadable.url!, {
+    fetch(uploadable.url!, {
       method: "POST",
       headers: {
         Authorization: "Bearer soosasdf",
       },
       body: formData,
-    });
-
-    const result = await response.json();
-    document.getElementById("cdn-response")?.classList.add("hidden");
-    document.getElementById("cdn-response")?.classList.remove("inline-block");
+    })
+      .then((response) => {
+        document.getElementById("cdn-response")?.classList.add("hidden");
+        document
+          .getElementById("cdn-response")
+          ?.classList.remove("inline-block");
+        if (response.ok) {
+          dropContainer.classList.add("bg-[#bbceb4]");
+          fileDisplay.innerHTML = "";
+          return response.json();
+        }
+        throw response;
+      })
+      .then((result) => {
+        fileDisplay.innerHTML = result.join("<br/>");
+      })
+      .catch((error: Response) => {
+        error
+          .json()
+          .then((msg) => (fileDisplay.innerHTML = "Error: " + msg.message));
+      });
   });
 
   function preventDefault(evt: Event) {
@@ -121,11 +137,16 @@ const {
     (document.getElementById("file")! as HTMLInputElement).files = (
       evt as DragEvent
     ).dataTransfer!.files;
-    fileDisplay.innerText = input.files?.length + " file(s) selected";
+    fileDisplay.innerHTML = input.files?.length + " file(s) selected";
+    dropContainer.classList.remove("bg-[#bbceb4]");
+    console.log(fileDisplay.innerHTML);
     evt.preventDefault();
   });
 
   input.addEventListener("change", (event) => {
-    fileDisplay.innerText = input.files?.length + " file(s) selected";
+    dropContainer.classList.remove("bg-[#bbceb4]");
+    console.log("soos");
+    fileDisplay.innerHTML = input.files?.length + " file(s) selected";
+    console.log(fileDisplay.innerHTML);
   });
 </script>

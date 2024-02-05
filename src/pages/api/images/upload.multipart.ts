@@ -54,7 +54,7 @@ async function uploadToCloudify(image: File, category: string) {
   let base64 = await fileToBase64(image);
   return await cloudinary.uploader.upload("data:image/png;base64," + base64, {
     folder: import.meta.env.CDN_FOLDER,
-    tags: category,
+    tags: category + ", image",
   });
 }
 

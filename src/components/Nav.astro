@@ -114,9 +114,9 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     </a>
   </div>
 </div>
-<script>
-  function checkMenu(checked: boolean) {
-    const menu = document.getElementById("menu")!;
+<script is:inline>
+  function checkMenu(checked) {
+    const menu = document.getElementById("menu");
     if (checked) {
       menu.classList.add("menu-visible");
     } else {
