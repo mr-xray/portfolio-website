@@ -1,5 +1,6 @@
 ---
 import { Image, imageConfig } from "astro:assets";
+import { slide } from "astro:transitions";
 import { v2 as cloudinary } from "cloudinary";
 
 interface Props {
@@ -7,40 +8,93 @@ interface Props {
   altText: string;
   classes: string;
   description?: string;
-  w_steps?: number;
-  w_min?: number;
-  w_max?: number;
 }
 
-const { url, altText, classes, description, w_steps, w_min, w_max } =
-  Astro.props;
+const { url, altText, classes, description } = Astro.props;
 
-const urls = [];
+const tailwindsWidths = {
+  "w-": 320,
+  "sm:w-": 640,
+  "md:w-": 768,
+  "lg:w-": 1024,
+  "xl:w-": 1280,
+  "2xl:w-": 1536,
+};
+
+let imageWidths = new Map<number, number>();
+
 let split = url.split("/upload/");
 let transformer = "f_auto/q_auto/";
+let urls = [];
 
-if (w_min && w_max && w_steps) {
-  for (let w = w_min; w <= w_max; w += w_steps) {
-    urls.push(
-      split[0] +
-        "/upload/" +
-        transformer +
-        "c_scale,w_" +
-        w +
-        "/" +
-        split[1] +
-        " " +
-        w +
-        "w",
-    );
+let tailwindsClasses = classes.split(" ");
+
+let toBeExtrapolated = [];
+for (let clazz of tailwindsClasses) {
+  for (let width of Object.keys(tailwindsWidths)) {
+    if (clazz.startsWith(width)) {
+      toBeExtrapolated.push(
+        tailwindsWidths[width as keyof typeof tailwindsWidths],
+      );
+    }
   }
-} else {
-  urls.push(split[0] + "/upload/" + transformer + split[1]);
+}
+let sizes = Object.values(tailwindsWidths).sort((a, b) => b - a);
+toBeExtrapolated = toBeExtrapolated.sort((a, b) => b - a);
+let extrapolated = new Map<number, number>();
+for (let i = 0; i < toBeExtrapolated.length; i++) {
+  let sliceIndex = sizes.indexOf(toBeExtrapolated[i]);
+  extrapolated.set(toBeExtrapolated[i], sizes[0]);
+  sizes = sizes.slice(sliceIndex);
+}
+
+for (let clazz of tailwindsClasses) {
+  for (let width of Object.keys(tailwindsWidths)) {
+    if (clazz.startsWith(width)) {
+      let elementWidth;
+      let expression = clazz.replace(width, "");
+      try {
+        elementWidth = eval(expression);
+        if (elementWidth >= 1) {
+          elementWidth *= 4;
+        } else if (elementWidth >= 0 && elementWidth < 1) {
+          elementWidth = Math.ceil(
+            extrapolated.get(
+              tailwindsWidths[width as keyof typeof tailwindsWidths],
+            )! * elementWidth,
+          );
+        }
+      } catch (error) {
+        if (expression.match("\\[.*\\]") && expression.includes("px")) {
+          elementWidth = parseInt(
+            expression.replace("px", "").replace("[", "").replace("]", ""),
+          );
+        }
+      }
+      imageWidths.set(
+        tailwindsWidths[width as keyof typeof tailwindsWidths],
+        elementWidth,
+      );
+    }
+  }
+}
+for (let [screen, imgSize] of imageWidths) {
+  urls.push(
+    split[0] +
+      "/upload/" +
+      transformer +
+      "c_scale,w_" +
+      imgSize +
+      "/" +
+      split[1] +
+      " " +
+      screen +
+      "w",
+  );
 }
 let srcSet = urls.join(",\n");
-console.log(srcSet);
 ---
 
-<div class={classes}>
-  <img class="w-full" srcset={srcSet} src={urls[0]} alt={altText} />
+<div>
+  <img class="" srcset={srcSet} src={srcSet} alt={altText} />
 </div>
