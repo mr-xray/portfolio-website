@@ -4,6 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { locale, determineLocale } from "../service/language";
 import PersonalBanner from "../components/PersonalBanner.astro";
 import Base from "../layouts/Base.astro";
+import PictureBrowser from "../components/PictureBrowser.astro";
 
 const props = {
   title: "Bernhard Steirer",
@@ -69,5 +70,8 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
         </div>
       </div>
     </main>
+  </div>
+  <div class="mx-auto flex w-11/12 justify-center items-center my-10">
+    <PictureBrowser />
   </div>
 </Base>

@@ -66,24 +66,22 @@ const {
 </url-uploadable>
 
 <script>
-  class Uploadable extends HTMLElement {
-    url: string | undefined;
+  export class Uploadable extends HTMLElement {
+    url;
     constructor() {
       super();
       this.url = this.dataset.url;
     }
   }
-
   customElements.define("url-uploadable", Uploadable);
-  const uploadForm = document.getElementById("upload-form") as HTMLFormElement;
-  const uploadable: Uploadable = document.querySelector(
-    "url-uploadable",
-  ) as any as Uploadable;
-  const dropContainer: HTMLElement = document.getElementById("drop-container")!;
-  const fileDisplay: HTMLElement = document.getElementById("files-selected")!;
-  const input: HTMLInputElement = document.getElementById(
-    "file",
-  ) as HTMLInputElement;
+</script>
+
+<script is:inline>
+  const uploadForm = document.getElementById("upload-form");
+  const uploadable = document.querySelector("url-uploadable");
+  const dropContainer = document.getElementById("drop-container");
+  const fileDisplay = document.getElementById("files-selected");
+  const input = document.getElementById("file");
 
   if (input.files?.length != 0) {
     fileDisplay.innerText = input.files?.length + " file(s) selected";
@@ -92,14 +90,13 @@ const {
   uploadForm.addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(uploadForm);
-    console.log(input.files);
     if (input.files?.length == 0) {
       fileDisplay.innerText = "Please select files!";
       return;
     }
     document.getElementById("cdn-response")?.classList.remove("hidden");
     document.getElementById("cdn-response")?.classList.add("inline-block");
-    fetch(uploadable.url!, {
+    fetch(uploadable.url, {
       method: "POST",
       headers: {
         Authorization: "Bearer soosasdf",
@@ -121,32 +118,27 @@ const {
       .then((result) => {
         fileDisplay.innerHTML = result.join("<br/>");
       })
-      .catch((error: Response) => {
+      .catch((error) => {
         error
           .json()
           .then((msg) => (fileDisplay.innerHTML = "Error: " + msg.message));
       });
   });
 
-  function preventDefault(evt: Event) {
+  function preventDefault(evt) {
     evt.preventDefault();
   }
   dropContainer.addEventListener("dragover", preventDefault);
   dropContainer.addEventListener("dragenter", preventDefault);
-  dropContainer.addEventListener("drop", (evt: Event) => {
-    (document.getElementById("file")! as HTMLInputElement).files = (
-      evt as DragEvent
-    ).dataTransfer!.files;
+  dropContainer.addEventListener("drop", (evt) => {
+    document.getElementById("file").files = evt.dataTransfer.files;
     fileDisplay.innerHTML = input.files?.length + " file(s) selected";
     dropContainer.classList.remove("bg-[#bbceb4]");
-    console.log(fileDisplay.innerHTML);
     evt.preventDefault();
   });
 
   input.addEventListener("change", (event) => {
     dropContainer.classList.remove("bg-[#bbceb4]");
-    console.log("soos");
     fileDisplay.innerHTML = input.files?.length + " file(s) selected";
-    console.log(fileDisplay.innerHTML);
   });
 </script>

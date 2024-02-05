@@ -1,0 +1,75 @@
+---
+import { ui } from "../i18n/ui";
+import { locale } from "../service/language";
+import { useTranslations } from "../i18n/utils";
+import DynamicImage from "./DynamicImage.astro";
+
+let categories = Object.keys(ui.en).filter((key) => key.startsWith("pics."));
+
+const { folderFetchEndpoint = Astro.url.origin + "/api/images/search.json" } =
+  Astro.props;
+
+const t = useTranslations(locale.get() as keyof typeof ui);
+---
+
+<url-uploadable data-url={folderFetchEndpoint} class="w-full">
+  <div class="w-full">
+    <div class="flex">
+      {
+        categories.map((category, index, array) => (
+          <button
+            id={"select-" + category}
+            class="p-3 mx-0 font-bold"
+            onclick={"selectCategory(`" + category + "` )"}
+          >
+            {t(category as keyof typeof ui.en)}
+          </button>
+        ))
+      }
+    </div>
+    <div class="w-full flex flex-wrap border border-foreground">
+      <DynamicImage
+        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+        altText="house"
+        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
+        w_steps={290}
+        w_min={10}
+        w_max={300}
+      />
+      <DynamicImage
+        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+        altText="house"
+        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
+      />
+      <!--<img
+        class="lg:w-1/5 p-1 w-1/2 md:w-1/3"
+        sizes="(min-width: 1024px) 200px, 300px"
+        srcset="https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_200/docs/house.jpg 200w,
+                https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_300/docs/house.jpg 300w"
+        src="https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_300/docs/house.jpg"
+        alt="Responsive house"
+      /> -->
+    </div>
+  </div>
+</url-uploadable>
+
+<script is:inline>
+  const uploadable = document.querySelector("url-uploadable");
+  const selectCategory = (category) => {
+    fetch(uploadable.url + "?" + new URLSearchParams({ category: category }))
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        error.text().then((text) => {
+          console.error("Error: " + text);
+        });
+      });
+  };
+</script>

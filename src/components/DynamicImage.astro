@@ -1,25 +1,46 @@
 ---
-import { Image } from "astro:assets";
+import { Image, imageConfig } from "astro:assets";
 import { v2 as cloudinary } from "cloudinary";
 
 interface Props {
-  imagePath: string;
+  url: string;
   altText: string;
-  name: string;
-  age: number;
-  location?: string;
+  classes: string;
+  description?: string;
+  w_steps?: number;
+  w_min?: number;
+  w_max?: number;
 }
 
-const { imagePath, altText, name, age } = Astro.props;
-cloudinary.search
-  .expression("resource_type:image AND tags=image AND folder=bernhardsteirer")
-  .sort_by("uploaded_at", "desc")
-  .max_results(10)
-  .execute()
-  .then((result) => console.log(result));
+const { url, altText, classes, description, w_steps, w_min, w_max } =
+  Astro.props;
+
+const urls = [];
+let split = url.split("/upload/");
+let transformer = "f_auto/q_auto/";
+
+if (w_min && w_max && w_steps) {
+  for (let w = w_min; w <= w_max; w += w_steps) {
+    urls.push(
+      split[0] +
+        "/upload/" +
+        transformer +
+        "c_scale,w_" +
+        w +
+        "/" +
+        split[1] +
+        " " +
+        w +
+        "w",
+    );
+  }
+} else {
+  urls.push(split[0] + "/upload/" + transformer + split[1]);
+}
+let srcSet = urls.join(",\n");
+console.log(srcSet);
 ---
 
-<div class="card">
-  <h2>{name}</h2>
-  <p>Age: {age}</p>
+<div class={classes}>
+  <img class="w-full" srcset={srcSet} src={urls[0]} alt={altText} />
 </div>
