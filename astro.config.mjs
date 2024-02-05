@@ -15,6 +15,10 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+  image: {
+    domains: ["res.cloudinary.com"],
+    remotePatterns: [{ protocol: "https" }],
+  },
   adapter: vercelServerless({
     edgeMiddleware: true,
   }),
