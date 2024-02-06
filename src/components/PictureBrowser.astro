@@ -27,7 +27,11 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         ))
       }
     </div>
-    <div class="w-full flex flex-wrap border border-foreground">
+
+    <div
+      class="w-full flex flex-wrap border border-foreground"
+      id="preview-container"
+    >
       <DynamicImage
         url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
         altText="house"
@@ -48,32 +52,120 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         altText="house"
         classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
       />
-      <DynamicImage
-        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
-        altText="house"
-        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
-      />
     </div>
   </div>
 </url-uploadable>
 
 <script is:inline>
+  const container = document.getElementById("preview-container");
   const uploadable = document.querySelector("url-uploadable");
   const selectCategory = (category) => {
     fetch(uploadable.url + "?" + new URLSearchParams({ category: category }))
       .then((response) => {
         if (response.ok) {
+          console.log("ok");
           return response.json();
         }
         throw response;
       })
       .then((data) => {
-        console.log(data);
+        container.innerHTML = "";
+        displayImages(data);
       })
       .catch((error) => {
         error.text().then((text) => {
           console.error("Error: " + text);
         });
       });
+  };
+
+  const classes = "lg:w-1/5 p-1 w-1/2 md:w-1/3";
+
+  const constructSrcSet = (url) => {
+    const tailwindsWidths = {
+      "w-": 320,
+      "sm:w-": 640,
+      "md:w-": 768,
+      "lg:w-": 1024,
+      "xl:w-": 1280,
+      "2xl:w-": 1536,
+    };
+
+    let imageWidths = new Map();
+
+    let split = url.split("/upload/");
+    let transformer = "f_auto/q_auto/";
+    let urls = [];
+
+    let tailwindsClasses = classes.split(" ");
+
+    let toBeExtrapolated = [];
+    for (let clazz of tailwindsClasses) {
+      for (let width of Object.keys(tailwindsWidths)) {
+        if (clazz.startsWith(width)) {
+          toBeExtrapolated.push(tailwindsWidths[width]);
+        }
+      }
+    }
+    let sizes = Object.values(tailwindsWidths).sort((a, b) => b - a);
+    toBeExtrapolated = toBeExtrapolated.sort((a, b) => b - a);
+    let extrapolated = new Map();
+    for (let i = 0; i < toBeExtrapolated.length; i++) {
+      let sliceIndex = sizes.indexOf(toBeExtrapolated[i]);
+      extrapolated.set(toBeExtrapolated[i], sizes[0]);
+      sizes = sizes.slice(sliceIndex);
+    }
+
+    for (let clazz of tailwindsClasses) {
+      for (let width of Object.keys(tailwindsWidths)) {
+        if (clazz.startsWith(width)) {
+          let elementWidth;
+          let expression = clazz.replace(width, "");
+          try {
+            elementWidth = eval(expression);
+            if (elementWidth >= 1) {
+              elementWidth *= 4;
+            } else if (elementWidth >= 0 && elementWidth < 1) {
+              elementWidth = Math.ceil(
+                extrapolated.get(tailwindsWidths[width]) * elementWidth,
+              );
+            }
+          } catch (error) {
+            if (expression.match("\\[.*\\]") && expression.includes("px")) {
+              elementWidth = parseInt(
+                expression.replace("px", "").replace("[", "").replace("]", ""),
+              );
+            }
+          }
+          imageWidths.set(
+            extrapolated.get(tailwindsWidths[width]),
+            elementWidth,
+          );
+        }
+      }
+    }
+    for (let [screen, imgSize] of imageWidths) {
+      urls.push(
+        split[0] +
+          "/upload/" +
+          transformer +
+          "c_scale,w_" +
+          imgSize +
+          "/" +
+          split[1] +
+          " " +
+          screen +
+          "w",
+      );
+    }
+    return urls.join(",\n");
+  };
+
+  const displayImages = (urls) => {
+    for (let url of urls) {
+      container.innerHTML += `<div class="${classes}">
+        <img class="w-full" srcset=${constructSrcSet(url)} alt='Personal image' />
+      </div>`;
+    }
   };
 </script>
