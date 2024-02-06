@@ -72,7 +72,9 @@ for (let clazz of tailwindsClasses) {
         }
       }
       imageWidths.set(
-        tailwindsWidths[width as keyof typeof tailwindsWidths],
+        extrapolated.get(
+          tailwindsWidths[width as keyof typeof tailwindsWidths],
+        )!,
         elementWidth,
       );
     }
@@ -95,6 +97,6 @@ for (let [screen, imgSize] of imageWidths) {
 let srcSet = urls.join(",\n");
 ---
 
-<div>
-  <img class="" srcset={srcSet} src={srcSet} alt={altText} />
+<div class={classes}>
+  <img class="w-full" srcset={srcSet} alt={altText} />
 </div>
