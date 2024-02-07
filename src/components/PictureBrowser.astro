@@ -149,7 +149,9 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         split[0] +
           "/upload/" +
           transformer +
-          "c_scale,w_" +
+          "c_fill,w_" +
+          imgSize +
+          ",h_" +
           imgSize +
           "/" +
           split[1] +
