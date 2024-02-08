@@ -55,6 +55,19 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     </div>
   </div>
 </url-uploadable>
+<div
+  id="image-display"
+  class="hidden px-20 top-0 left-0 max-h-screen fixed overflow-auto w-full h-full z-50 bg-gray/50 justify-center items-center"
+>
+  <div class="w-3/4 h-3/4 flex justify-center items-center flex-col">
+    <i
+      class="text-center fas fa-times cursor-pointer text-3xl"
+      id="cancel"
+      onclick="closeImageDisplay()"></i>
+    <br />
+    <img id="image-modal" class="w-full h-full object-contain" src="" />
+  </div>
+</div>
 
 <script is:inline>
   const container = document.getElementById("preview-container");
@@ -172,14 +185,15 @@ const t = useTranslations(locale.get() as keyof typeof ui);
   };
 
   const openLarge = (url) => {
-    console.log(url);
-    let elemDiv = document.createElement("div");
-    elemDiv.className =
-      "pt-24 top-0 left-0 fixed overflow-auto w-full h-full z-50 bg-gray/50 flex justify-center items-center";
-    let fullImg = document.createElement("img");
-    fullImg.className = "w-70 max-h-svh object-contain";
+    let fullImg = document.getElementById("image-modal");
+    let imageDisplay = document.getElementById("image-display");
+    imageDisplay.classList.remove("hidden");
+    imageDisplay.classList.add("flex");
     fullImg.src = url;
-    elemDiv.appendChild(fullImg);
-    document.body.appendChild(elemDiv);
+  };
+  const closeImageDisplay = () => {
+    let imageDisplay = document.getElementById("image-display");
+    imageDisplay.classList.remove("flex");
+    imageDisplay.classList.add("hidden");
   };
 </script>
