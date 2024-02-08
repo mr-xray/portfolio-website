@@ -1,7 +1,9 @@
 ---
+import { getRelativeLocaleUrl } from "astro/virtual-modules/i18n.js";
 import Nav from "../../components/Nav.astro";
 import PersonalBanner from "../../components/PersonalBanner.astro";
 import Base from "../../layouts/Base.astro";
+import { locale } from "../../service/language";
 
 const props = {
   title: "Bernhard Steirer",
@@ -54,7 +56,9 @@ const props = {
             the next great adventure.
           </p>
           <button class="p-4 my-4 mr-2 bg-foreground font-bold text-white"
-            >Let's talk</button
+            ><a href={getRelativeLocaleUrl(locale.get(), "contact")}
+              >Let's talk</a
+            ></button
           >
           <button class="p-4 my-4 bg-foreground font-bold text-white"
             >My projects</button
