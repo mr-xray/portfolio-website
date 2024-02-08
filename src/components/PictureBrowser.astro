@@ -190,7 +190,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
   const displayImages = (urls) => {
     for (let url of urls) {
       container.innerHTML += `<div class="${classes}" onclick="openLarge('${url}');">
-        <img class="w-full" srcset=${constructSrcSet(url)} alt='Personal image' />
+        <img class="w-full cursor-pointer" srcset=${constructSrcSet(url)} alt='Personal image' />
       </div>`;
     }
   };
