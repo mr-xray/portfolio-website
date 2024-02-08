@@ -12,14 +12,17 @@ const { folderFetchEndpoint = Astro.url.origin + "/api/images/search.json" } =
 const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
-<url-uploadable data-url={folderFetchEndpoint} class="w-full">
+<url-uploadable
+  data-url={folderFetchEndpoint}
+  class="w-full border-foreground border"
+>
   <div class="w-full">
     <div class="flex flex-wrap">
       {
         categories.map((category, index, array) => (
           <button
             id={"select-" + category}
-            class="p-3 mx-0 font-bold"
+            class="p-3 mx-0 font-bold transition-all ease-in-out duration-300"
             onclick={"selectCategory(`" + category + "` )"}
           >
             {t(category as keyof typeof ui.en)}
@@ -29,7 +32,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     </div>
 
     <div
-      class="w-full flex flex-wrap border border-foreground"
+      class="w-full flex flex-wrap border-t border-foreground"
       id="preview-container"
     >
       <DynamicImage
@@ -72,7 +75,15 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 <script is:inline>
   const container = document.getElementById("preview-container");
   const uploadable = document.querySelector("url-uploadable");
+  var selected;
   const selectCategory = (category) => {
+    if (selected) {
+      selected.classList.remove("bg-foreground");
+      selected.classList.remove("text-white");
+    }
+    selected = document.getElementById("select-" + category);
+    selected.classList.add("bg-foreground");
+    selected.classList.add("text-white");
     fetch(uploadable.url + "?" + new URLSearchParams({ category: category }))
       .then((response) => {
         if (response.ok) {
