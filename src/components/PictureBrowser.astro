@@ -165,9 +165,21 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 
   const displayImages = (urls) => {
     for (let url of urls) {
-      container.innerHTML += `<div class="${classes}">
+      container.innerHTML += `<div class="${classes}" onclick="openLarge('${url}');">
         <img class="w-full" srcset=${constructSrcSet(url)} alt='Personal image' />
       </div>`;
     }
+  };
+
+  const openLarge = (url) => {
+    console.log(url);
+    let elemDiv = document.createElement("div");
+    elemDiv.className =
+      "pt-24 top-0 left-0 fixed overflow-auto w-full h-full z-50 bg-gray/50 flex justify-center items-center";
+    let fullImg = document.createElement("img");
+    fullImg.className = "w-70 max-h-svh object-contain";
+    fullImg.src = url;
+    elemDiv.appendChild(fullImg);
+    document.body.appendChild(elemDiv);
   };
 </script>
