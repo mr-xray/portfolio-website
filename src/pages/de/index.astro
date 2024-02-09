@@ -29,7 +29,7 @@ const props = {
 >
   <Nav />
   <div
-    class="relative -z-50 w-full md:w-11/12 lg:bg-gray mx-auto flex justify-center md:[&>*]:mx-8 md:pt-10"
+    class="relative z-0 w-full md:w-11/12 lg:bg-gray mx-auto flex justify-center md:[&>*]:mx-8 md:pt-10"
   >
     <main>
       <div class="w-full flex lg:hidden px-5 max-w-full h-0">
@@ -57,13 +57,9 @@ const props = {
           </p>
           <a
             href={getRelativeLocaleUrl(locale.get(), "contact")}
-            class="cursor-pointer"
+            class="z-50 max-w-fit p-4 my-4 mr-2 bg-foreground font-bold text-white cursor-pointer"
           >
-            <button
-              class="max-w-fit p-4 my-4 mr-2 bg-foreground font-bold text-white cursor-pointer"
-            >
-              Schreib mir
-            </button>
+            Schreib mir
           </a>
           <button class="p-4 my-4 bg-foreground font-bold text-white"
             >Meine Projekte</button
