@@ -5,6 +5,18 @@ export const POST: APIRoute = async ({ request }) => {
   const uploadResponses = [];
   const formData: FormData = await request.formData();
   let category: string | undefined;
+  let password = formData.get("password");
+  if (password?.toString() != import.meta.env.CDN_PERMISSION_KEY) {
+    return new Response(
+      JSON.stringify({
+        message: "Wrong or missing password!",
+      }),
+      {
+        status: 401,
+      },
+    );
+  }
+  formData.delete("password");
   for (let input of formData) {
     if (!category && input[0] == "category" && input[1]) {
       category = input[1] as string;

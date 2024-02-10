@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly CDN_API_KEY: string;
   readonly CDN_SECRET: string;
   readonly CDN_FOLDER: string;
+  readonly CDN_PERMISSION_KEY: string;
 }
 
 interface ImportMeta {
