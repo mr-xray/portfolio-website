@@ -6,8 +6,7 @@ import DynamicImage from "./DynamicImage.astro";
 
 let categories = Object.keys(ui.en).filter((key) => key.startsWith("pics."));
 
-const { folderFetchEndpoint = Astro.url.origin + "/api/images/search.json" } =
-  Astro.props;
+const folderFetchEndpoint = Astro.url.origin + "/api/images/search.json";
 
 const t = useTranslations(locale.get() as keyof typeof ui);
 ---
