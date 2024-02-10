@@ -72,6 +72,15 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 </div>
 
 <script is:inline>
+  class Uploadable extends HTMLElement {
+    url;
+    constructor() {
+      super();
+      this.url = this.dataset.url;
+    }
+  }
+  customElements.define("url-uploadable", Uploadable);
+
   const container = document.getElementById("preview-container");
   const uploadable = document.querySelector("url-uploadable");
   var selected;

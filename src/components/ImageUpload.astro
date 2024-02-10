@@ -73,8 +73,8 @@ const {
   </form>
 </url-uploadable>
 
-<script>
-  export class Uploadable extends HTMLElement {
+<script is:inline>
+  class Uploadable extends HTMLElement {
     url;
     constructor() {
       super();
@@ -82,9 +82,6 @@ const {
     }
   }
   customElements.define("url-uploadable", Uploadable);
-</script>
-
-<script is:inline>
   const uploadForm = document.getElementById("upload-form");
   const uploadable = document.querySelector("url-uploadable");
   const dropContainer = document.getElementById("drop-container");
