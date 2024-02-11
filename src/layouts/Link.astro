@@ -1,0 +1,26 @@
+---
+import { locale } from "../service/language";
+import { getRelativeLocaleUrl } from "astro/virtual-modules/i18n.js";
+
+/*  
+  This layout has to replace all a-tags in pages
+  when redirecting to language-dependent
+  links while using the Base-Layout for locale determination.
+  Classic a-tags on pages are built before the Base-Layout
+  determines the correct locale. This Link is built after the Base-Layout
+  and thus uses the correct locale. 
+ */
+interface Props {
+  class: string;
+  url: string;
+  target?: string;
+}
+
+const { class: className, url, target } = Astro.props;
+
+const translatedUrl = getRelativeLocaleUrl(locale.get(), url);
+---
+
+<a href={translatedUrl} target={target} class:list={className}>
+  <slot />
+</a>

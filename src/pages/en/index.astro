@@ -4,6 +4,8 @@ import Nav from "../../components/Nav.astro";
 import PersonalBanner from "../../components/PersonalBanner.astro";
 import Base from "../../layouts/Base.astro";
 import { locale } from "../../service/language";
+import Link from "../../layouts/Link.astro";
+import PictureBrowser from "../../components/PictureBrowser.astro";
 
 const props = {
   title: "Bernhard Steirer",
@@ -55,12 +57,12 @@ const props = {
             my compulsory military service for Austria, always ready to embark on
             the next great adventure.
           </p>
-          <a
-            href={getRelativeLocaleUrl(locale.get(), "contact")}
+          <Link
+            url="contact"
             class="z-50 max-w-fit p-4 my-4 mr-2 bg-foreground font-bold text-white cursor-pointer"
           >
             Let's talk
-          </a>
+          </Link>
           <button class="p-4 my-4 bg-foreground font-bold text-white"
             >My projects</button
           >
@@ -68,6 +70,9 @@ const props = {
         <div class="w-full hidden lg:flex">
           <PersonalBanner />
         </div>
+      </div>
+      <div class="mx-auto flex w-11/12 justify-center items-center my-10">
+        <PictureBrowser />
       </div>
     </main>
   </div>

@@ -5,6 +5,7 @@ import { locale, determineLocale } from "../service/language";
 import PersonalBanner from "../components/PersonalBanner.astro";
 import Base from "../layouts/Base.astro";
 import PictureBrowser from "../components/PictureBrowser.astro";
+import Link from "../layouts/Link.astro";
 
 const props = {
   title: "Bernhard Steirer",
@@ -31,7 +32,7 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
 >
   <Nav />
   <div
-    class="relative -z-50 w-full md:w-11/12 lg:bg-gray mx-auto flex justify-center md:[&>*]:mx-8 md:pt-10"
+    class="relative z-0 w-full md:w-11/12 lg:bg-gray mx-auto flex justify-center md:[&>*]:mx-8 md:pt-10"
   >
     <main>
       <div class="w-full flex lg:hidden px-5 max-w-full h-0">
@@ -58,9 +59,12 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
             my compulsory military service for Austria, always ready to embark on
             the next great adventure.
           </p>
-          <button class="p-4 my-4 mr-2 bg-foreground font-bold text-white"
-            >Let's talk</button
+          <Link
+            url="contact"
+            class="z-50 max-w-fit p-4 my-4 mr-2 bg-foreground font-bold text-white cursor-pointer"
           >
+            Let's talk
+          </Link>
           <button class="p-4 my-4 bg-foreground font-bold text-white"
             >My projects</button
           >
@@ -69,9 +73,9 @@ Astro.redirect(getRelativeLocaleUrl(locale.get(), "/"), 300);
           <PersonalBanner />
         </div>
       </div>
+      <div class="mx-auto flex w-11/12 justify-center items-center my-10">
+        <PictureBrowser />
+      </div>
     </main>
-  </div>
-  <div class="mx-auto flex w-11/12 justify-center items-center my-10">
-    <PictureBrowser />
   </div>
 </Base>
