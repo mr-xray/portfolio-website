@@ -7,6 +7,8 @@ interface ImportMetaEnv {
   readonly CDN_SECRET: string;
   readonly CDN_FOLDER: string;
   readonly CDN_PERMISSION_KEY: string;
+  readonly SENDGRID_API_KEY: string;
+  readonly SENDGRID_VERIFIED_EMAIL: string;
 }
 
 interface ImportMeta {
