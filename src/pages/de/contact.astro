@@ -1,25 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
-import { sendMail } from "../../service/mail";
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const name = data.get("name");
-    const email = data.get("email");
-    const message = data.get("message");
-    if (name && email && message) {
-      const response = await sendMail(
-        name.toString(),
-        email.toString(),
-        message.toString(),
-      );
-      console.log(response);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
 ---
 
 <Base title="Let's talk">
@@ -46,6 +27,7 @@ if (Astro.request.method === "POST") {
         style="opacity: 1; transform: translateY(0%) translateZ(0px);"
       >
         <form
+          id="contact-form"
           class="flex justify-center items-center flex-col gap-4"
           method="post"
         >
@@ -79,14 +61,42 @@ if (Astro.request.method === "POST") {
             <textarea
               class="textarea w-full resize-none bg-gray border border-medium p-3 text-primary-content"
               name="message"
-              placeholder="Message"
+              placeholder="Nachricht"
               rows="5"></textarea>
           </div><button
-            class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+            id="submit-btn"
+            class="p-4 bg-foreground font-bold text-white cursor-pointer w-full"
             type="submit">Senden</button
           >
+          <p id="error-text"></p>
         </form>
       </div>
     </div>
   </div>
 </Base>
+
+<script is:inline>
+  const uploadForm = document.getElementById("contact-form");
+  const errorText = document.getElementById("error-text");
+  const submitBtn = document.getElementById("submit-btn");
+  uploadForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    submitBtn.classList.remove("!bg-[#bbceb4]");
+    errorText.innerText = "";
+    const formData = new FormData(uploadForm);
+    fetch(window.location.origin + "/api/contact.json", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          submitBtn.classList.add("!bg-[#bbceb4]");
+          return;
+        }
+        throw response;
+      })
+      .catch((error) => {
+        error.text().then((msg) => (errorText.innerText += "Error: " + msg));
+      });
+  });
+</script>

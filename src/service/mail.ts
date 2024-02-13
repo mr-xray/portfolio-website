@@ -9,6 +9,5 @@ export const sendMail = (name: string, email: string, message: string) => {
     subject: `Contact form submission from ${name}`,
     text: message,
   };
-  console.log(msg);
   return sendGrid.send(msg);
 };

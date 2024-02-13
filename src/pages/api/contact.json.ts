@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { sendMail } from "../../../service/mail";
+import { sendMail } from "../../service/mail";
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -14,27 +14,23 @@ export const POST: APIRoute = async ({ request }) => {
         message.toString(),
       );
       if (response[0].statusCode == 202) {
-        return new Response(
-          JSON.stringify({
-            message: "Success",
-          }),
-          {
-            status: 200,
+        return new Response("Success", {
+          headers: {
+            "Content-Type": "text/plain",
           },
-        );
+          status: 200,
+        });
       }
       throw response;
     } else {
-      throw Error("Form data invalid");
+      throw { message: "Form data invalid" };
     }
-  } catch (error) {
-    return new Response(
-      JSON.stringify({
-        error,
-      }),
-      {
-        status: 422,
+  } catch (error: any) {
+    return new Response(error.message, {
+      headers: {
+        "Content-Type": "text/plain",
       },
-    );
+      status: 422,
+    });
   }
 };

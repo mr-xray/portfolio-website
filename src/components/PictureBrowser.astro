@@ -95,7 +95,6 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     fetch(uploadable.url + "?" + new URLSearchParams({ category: category }))
       .then((response) => {
         if (response.ok) {
-          console.log("ok");
           return response.json();
         }
         throw response;
