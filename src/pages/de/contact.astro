@@ -6,9 +6,11 @@ import Nav from "../../components/Nav.astro";
 <Base title="Let's talk">
   <Nav />
   <div class="w-full flex justify-center">
-    <div class="w-11/12 bg-gray z-0 p-10 flex justify-between">
+    <div
+      class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col"
+    >
       <div
-        class="w-full lg:w-4/12 lg:mt-0 mt-96 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+        class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
       >
         <h1 class="font-serif">Lass uns besprechen!</h1>
         <p>
@@ -24,7 +26,7 @@ import Nav from "../../components/Nav.astro";
         <br />
       </div>
       <div
-        class="bg-white p-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] w-7/12"
+        class="bg-white p-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] lg:w-7/12 h-min w-full lg:mt-0 mt-10"
         style="opacity: 1; transform: translateY(0%) translateZ(0px);"
       >
         <form
