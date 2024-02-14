@@ -6,6 +6,48 @@ import Nav from "../../components/Nav.astro";
 
 <Base title="Über mich">
   <Nav />
-  <h1>Über mich</h1>
-  <ImageUpload />
+  <div class="w-full flex justify-center">
+    <div
+      class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
+    >
+      <div
+        class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      >
+        <h1 class="font-serif">Mein Lebenslauf</h1>
+        <p>
+          <ul class="list-disc list-inside">
+            <li>
+              4 Jahre Unterstufe <a
+                class="underline"
+                href="https://www.ahskoeflach.at/">BRG Köflach</a
+              > Realzweig (naturwissentschaftl. Schwerpunkt)
+            </li>
+            <li>
+              5 Jahre Oberstufe
+              <a class="underline" href="https://htl-kaindorf.at/"
+                >HTL Kaindorf</a
+              >
+              für Informatik und Betriebswirtschaft
+            </li>
+            <li>11 Monate Zivilersatzdienst in Tansania</li>
+            <li>Praktika in Softwaredevelopment</li>
+            <li>Physikstudium geplant</li>
+          </ul>
+          <br /> Wer's genau wissen will, hier gibt's die PDFs.
+        </p>
+        <br />
+        <button
+          onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+          type="submit">Lebenslauf für Normalos</button
+        >
+        <button
+          onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+          type="submit">Lebenslauf für Software-Nerds</button
+        >
+        <br />
+      </div>
+    </div>
+  </div>
 </Base>
