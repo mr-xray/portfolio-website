@@ -25,18 +25,28 @@ export const GET: APIRoute = async ({ params, request }) => {
     });
   }
 
-  const cloudinaryResult = await fetchFolder(
-    import.meta.env.CDN_FOLDER,
-    ["image", category],
-    "image",
-    10,
-  );
-  let urls = cloudinaryResult.resources;
-  urls = urls.map((element: any) => element.secure_url);
-  return new Response(JSON.stringify(urls), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const cloudinaryResult = await fetchFolder(
+      import.meta.env.CDN_FOLDER,
+      ["image", category],
+      "image",
+      10,
+    );
+    let urls = cloudinaryResult.resources;
+    urls = urls.map((element: any) => element.secure_url);
+    return new Response(JSON.stringify(urls), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return new Response("An error occurred fetching images", {
+      status: 500,
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  }
 };
