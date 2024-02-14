@@ -21,7 +21,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         categories.map((category, index, array) => (
           <button
             id={"select-" + category}
-            class="p-3 mx-0 font-bold transition-all ease-in-out duration-300"
+            class="p-3 mx-0 font-bold transition-all ease-in-out duration-300 select-button"
             onclick={"selectCategory(`" + category + "` )"}
           >
             {t(category as keyof typeof ui.en)}
@@ -109,6 +109,9 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         });
       });
   };
+  selectCategory(
+    document.getElementsByClassName("select-button")[0].id.split("-")[1],
+  );
 
   const classes = "lg:w-1/5 p-1 w-1/2 md:w-1/3";
 
