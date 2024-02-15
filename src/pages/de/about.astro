@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ImageUpload from "../../components/ImageUpload.astro";
 import Nav from "../../components/Nav.astro";
+import de_cv from "../../content/cv/de.txt";
 ---
 
 <Base title="Über mich">
@@ -37,15 +38,21 @@ import Nav from "../../components/Nav.astro";
         </p>
         <br />
         <button
-          onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
           class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-          type="submit">Lebenslauf für Normalos</button
         >
+          <a href={de_cv} download="STEIRER_Bernhard_Lebenslauf"
+            >Lebenslauf für Normalos</a
+          >
+        </button>
         <button
-          onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
           class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-          type="submit">Lebenslauf für Software-Nerds</button
         >
+          <a
+            href={de_cv}
+            download="STEIRER_Bernhard_Lebenslauf_Software"
+            class="">Lebenslauf für Software-Nerds</a
+          >
+        </button>
         <br />
       </div>
     </div>
