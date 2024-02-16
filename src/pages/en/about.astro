@@ -2,10 +2,56 @@
 import Base from "../../layouts/Base.astro";
 import ImageUpload from "../../components/ImageUpload.astro";
 import Nav from "../../components/Nav.astro";
+import cv from "../../content/cv/resume_software_en.pdf";
 ---
 
 <Base title="About me">
   <Nav />
-  <h1>About me</h1>
-  <ImageUpload />
+  <div class="w-full flex justify-center">
+    <div
+      class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
+    >
+      <div
+        class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      >
+        <h1 class="font-serif">Mein Lebenslauf</h1>
+        <p>
+          <ul class="list-disc list-inside">
+            <li>
+              4 years secondary school <a
+                class="underline"
+                href="https://www.ahskoeflach.at/">BRG Köflach</a
+              > Focus on natural sciences
+            </li>
+            <li>
+              5 years high school
+              <a class="underline" href="https://htl-kaindorf.at/"
+                >HTL Kaindorf</a
+              >
+              Focus on computer science, business administartion and English
+            </li>
+            <li>11 months civilian service in Tanzania</li>
+            <li>Internships in Software-Development</li>
+            <li>Aspiring undergraduate in Physics</li>
+          </ul>
+          <br /> If you want to know more, you can find more details in the PDFs
+          below.
+        </p>
+        <br />
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+        >
+          <a href={cv} download="STEIRER_Bernhard_Resume">Standard Resumé</a>
+        </button>
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+        >
+          <a href={cv} download="STEIRER_Bernhard_Resume_Software" class=""
+            >Resumé for Software-Nerds</a
+          >
+        </button>
+        <br />
+      </div>
+    </div>
+  </div>
 </Base>
