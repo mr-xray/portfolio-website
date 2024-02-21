@@ -7,6 +7,9 @@ export const showDefaultLang = false;
 
 export const ui = {
   en: {
+    "blog.headline": "Blog entries in",
+    "blog.en": "English",
+    "blog.de": "German",
     "nav.home": "Home",
     "nav.about": "About me",
     "nav.pics": "Images",
@@ -20,6 +23,9 @@ export const ui = {
     "pics.other": "Other",
   },
   de: {
+    "blog.headline": "Blog-Artikel auf",
+    "blog.en": "Englisch",
+    "blog.de": "Deutsch",
     "nav.home": "Home",
     "nav.about": "Über mich",
     "nav.pics": "Bilder",

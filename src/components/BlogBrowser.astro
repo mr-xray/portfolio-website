@@ -1,0 +1,59 @@
+---
+import { ui, languages } from "../i18n/ui";
+import { locale } from "../service/language";
+import { useTranslations } from "../i18n/utils";
+import DynamicImage from "./DynamicImage.astro";
+import { getCollection } from "astro:content";
+
+const t = useTranslations(locale.get() as keyof typeof ui);
+let languageCollections = Object.entries(
+  (await getCollection("blog")).reduce(function (rv: any, x) {
+    let lang = x.slug.split("/")[0];
+    (rv[lang] = rv[lang] || []).push(x);
+    //console.log("rv is now ", rv);
+    return rv;
+  }, {}),
+);
+
+console.log(languageCollections);
+//console.log(Object.entries(languages).map((key, value) => console.log(key)));
+---
+
+<div class="w-full">
+  <div class="flex flex-wrap">
+    {
+      languageCollections.map((element) => (
+        <div class="w-full ml-15 mb-8 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]">
+          <h2>
+            {t("blog.headline") +
+              " " +
+              t(("blog." + element[0]) as keyof typeof ui.en)}
+          </h2>
+          {(element[1] as any).map((post: any) => (
+            <div id={"display-" + post.id} class={"display-" + element[0]}>
+              <p>{post.id}</p>
+            </div>
+          ))}
+          <button
+            id={"select-" + element[0]}
+            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+            onclick={"selectLanguage(`" + element[0] + "` )"}
+          >
+            {languages[element[0] as keyof typeof languages]}
+          </button>
+        </div>
+      ))
+    }
+  </div>
+  {
+    languageCollections.map((element) => (
+      <>
+        {(element[1] as any).map((post: any) => (
+          <div id={"display-" + post.id} class={"display-" + element[0]}>
+            <p>{post.id}</p>
+          </div>
+        ))}
+      </>
+    ))
+  }
+</div>

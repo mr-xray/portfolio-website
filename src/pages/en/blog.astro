@@ -1,19 +1,16 @@
 ---
-import { getEntry } from "astro:content";
-// 1. Get the slug from the incoming server request
-const { slug } = Astro.params;
-if (slug === undefined) {
-  throw new Error("Slug is required");
-}
-// 2. Query for the entry directly using the request slug
-const entry = await getEntry("blog", slug);
-// 3. Redirect if the entry does not exist
-if (entry === undefined) {
-  return Astro.redirect("/404");
-}
-// 4. (Optional) Render the entry to HTML in the template
-const { Content } = await entry.render();
+import BlogBrowser from "../../components/BlogBrowser.astro";
+import Nav from "../../components/Nav.astro";
+import Base from "../../layouts/Base.astro";
 ---
 
-{entry.slug}
-<Content />
+<Base title="Blog">
+  <Nav />
+  <div class="w-full flex justify-center">
+    <div
+      class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
+    >
+      <BlogBrowser />
+    </div>
+  </div>
+</Base>

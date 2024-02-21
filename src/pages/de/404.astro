@@ -1,0 +1,25 @@
+---
+import Nav from "../../components/Nav.astro";
+import Base from "../../layouts/Base.astro";
+import Link from "../../layouts/Link.astro";
+---
+
+<Base title="404: Not found" author="Bernhard Steirer">
+  <div class="w-full flex justify-center">
+    <div
+      class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
+    >
+      <div
+        class="w-full ml-15 mb-8 p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] flex flex-col"
+      >
+        <h1 class="font-serif">This page does not exist!</h1>
+        <p>How did you get here, though?</p>
+        <Link
+          url="/"
+          class="max-w-fit p-4 my-4 mr-2 bg-foreground font-bold text-white cursor-pointer"
+          >Back home
+        </Link>
+      </div>
+    </div>
+  </div>
+</Base>
