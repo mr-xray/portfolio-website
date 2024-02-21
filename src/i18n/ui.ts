@@ -9,7 +9,7 @@ export const ui = {
   en: {
     "nav.home": "Home",
     "nav.about": "About me",
-    "nav.physics": "Physics",
+    "nav.pics": "Images",
     "nav.dev": "Software",
     "nav.blog": "Blog",
     "pics.me": "Me & Friends",
@@ -22,7 +22,7 @@ export const ui = {
   de: {
     "nav.home": "Home",
     "nav.about": "Über mich",
-    "nav.physics": "Physik",
+    "nav.pics": "Bilder",
     "nav.dev": "Software",
     "nav.blog": "Blog",
     "pics.me": "Ich",
