@@ -1,8 +1,8 @@
 ---
 import Base from "../../layouts/Base.astro";
-import ImageUpload from "../../components/ImageUpload.astro";
 import Nav from "../../components/Nav.astro";
-import de_cv from "../../content/cv/de.txt";
+import cv from "../../content/cv/resume_software_en.pdf";
+import bec from "../../content/cv/bec.pdf";
 ---
 
 <Base title="Über mich">
@@ -11,6 +11,23 @@ import de_cv from "../../content/cv/de.txt";
     <div
       class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
     >
+      <div
+        class="w-full ml-15 mb-8 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      >
+        <h1 class="font-serif">Über mich</h1>
+        <p>
+          Mein Name ist Bernhard Steirer.<br />
+          Geboren bin ich am 28.09.2004 in Voitsberg, Österreich (19 Jahre alt).<br
+          />
+          <br />
+          Im Juni 2023 habe ich meine Matura (allgemeine Hochschulreife in Österreich)
+          an der 5-jährigen <a class="underline" href="https://htl-kaindorf.at/"
+            >HTL Kaindorf</a
+          > für Informatik und Betriebswirtschaft abgeschlossen. <br /><br /> Aktuell
+          bin ich in Tansania, wo ich meinen elfmonatigen Zivilersatzdienst als Englischlehrer
+          an einer Primary-School absolviere.
+        </p>
+      </div>
       <div
         class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
       >
@@ -40,17 +57,46 @@ import de_cv from "../../content/cv/de.txt";
         <button
           class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
         >
-          <a href={de_cv} download="STEIRER_Bernhard_Lebenslauf"
+          <a href={cv} download="STEIRER_Bernhard_Lebenslauf"
             >Lebenslauf für Normalos</a
           >
         </button>
         <button
           class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
         >
-          <a
-            href={de_cv}
-            download="STEIRER_Bernhard_Lebenslauf_Software"
-            class="">Lebenslauf für Software-Nerds</a
+          <a href={cv} download="STEIRER_Bernhard_Lebenslauf_Software" class=""
+            >Lebenslauf für Software-Nerds</a
+          >
+        </button>
+        <br />
+      </div>
+      <div
+        class="w-full lg:w-7/12 lg:mt-0 mt-8 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      >
+        <h1 class="font-serif">Englisch-Zertifizierungen</h1>
+        <p>
+          <ul class="list-disc list-inside">
+            <li>Cambridge C1 Advanced</li>
+            Score 206, Grade A, CEFR Level: C2<br /><br />
+            <li>Cambridge B2 BEC Vantage</li>
+            Business English Certificate<br /> Score 187, Grade A, CEFR Level: C1<br
+            />
+          </ul>
+          <br /> PDFs unterhalb zum Download verfügbar.
+        </p>
+        <br />
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+        >
+          <a href={cv} download="STEIRER_Bernhard_C1-Advanced_206"
+            >Cambridge C1 Advanced - Score 206</a
+          >
+        </button>
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+        >
+          <a href={bec} download="STEIRER_Bernhard_BEC_187"
+            >Cambridge B2 BEC Vantage - Score 187</a
           >
         </button>
         <br />
