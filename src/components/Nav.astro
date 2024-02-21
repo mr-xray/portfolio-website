@@ -19,6 +19,11 @@ const discordLink = "https://discordapp.com/users/472479669141372943";
 const linkedInLink = "https://www.linkedin.com/in/bernhard-steirer/";
 
 const t = useTranslations(locale.get() as keyof typeof ui);
+interface Props {
+  noLang?: boolean;
+}
+
+const { noLang } = Astro.props;
 ---
 
 <link
@@ -66,12 +71,12 @@ const t = useTranslations(locale.get() as keyof typeof ui);
           <Image src={linkedInSVG} alt="LinkedIn" width="20" height="20" />
         </a>
       </div>
-      <div><LanguagePicker /></div>
+      {noLang ? <></> : <div><LanguagePicker /> </div> }
     </div>
     <!-- Responsive Burger -->
     <div class="flex lg:hidden navbar-burger space-x-10">
       <div class="flex items-center justify-center">
-        <LanguagePicker />
+        {noLang ? <></> : <div><LanguagePicker /> </div> }
       </div>
       <div class="relative flex place-items-center">
         <i class="text-center absolute fas fa-bars cursor-pointer" id="opener"

@@ -2,6 +2,7 @@
 import { getEntry } from "astro:content";
 import Base from "../layouts/Base.astro";
 import { determineLocale, locale } from "../service/language";
+import Nav from "../components/Nav.astro";
 // 1. Get the slug from the incoming server request
 const { slug } = Astro.params;
 if (slug === undefined) {
@@ -19,18 +20,14 @@ determineLocale(Astro.url, Astro.preferredLocale);
 ---
 
 <Base title={entry.data.title} author={entry.data.author}>
-  <div class="w-full flex justify-center">
+  <Nav noLang="true" /><div class="w-full flex justify-center">
     <div
-      class="w-11/12 bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
+      class="bg-gray z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
     >
       <div
         class="w-full ml-15 mb-8 p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] flex flex-col"
       >
         <h1>{entry.data.title}</h1>
-        <h2>soos</h2>
-        <h3>soos</h3>
-        <h4>soos</h4>
-        <h5>soos</h5>
         <h6>
           {entry.data.author}, {
             entry.data.pubDate.toLocaleDateString(locale.get())
