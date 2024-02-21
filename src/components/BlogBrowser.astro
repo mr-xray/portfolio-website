@@ -51,7 +51,7 @@ let languageCollections = Object.entries(
                   </div>
                   <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
                     <h3 class="my-0 ">{post.data.title}</h3>
-                    <p>Von {post.data.author}</p>
+                    <p>{t("blog.author") + " " + post.data.author}</p>
                     <div class="h-min-fit flex w-full">
                       {post.data.tags.map((tag: any) => (
                         <button class="bg-foreground text-white rounded-3xl px-3 py-1 mr-1 text-nowrap">
@@ -92,7 +92,7 @@ let languageCollections = Object.entries(
                     <h3 class="my-0 ">
                       {post.data.title + " alalalalalalala alalalalalalaal"}
                     </h3>
-                    <p>Von {post.data.author}</p>
+                    <p>{t("blog.author") + " " + post.data.author}</p>
 
                     <p class="flex-grow overflow-hidden">
                       {post.data.description}

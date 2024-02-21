@@ -58,7 +58,9 @@ const { noLang } = Astro.props;
       </div>
       <div>
         <Image src={blogSVG} alt="Book icon" width="20" height="20" />
-        {t("nav.blog")}
+        <a href={getRelativeLocaleUrl(locale.get(), "blog")}
+          >{t("nav.blog")}</a
+        >
       </div>
       <div class="flex-row flex-shrink-0 [&>*]:mx-1">
         <a href={githubLink} target="_blank">
@@ -107,7 +109,9 @@ const { noLang } = Astro.props;
   </div>
   <div>
     <Image src={blogSVG} alt="Book icon" width="20" height="20" />
-    {t("nav.blog")}
+    <a href={getRelativeLocaleUrl(locale.get(), "blog")}
+          >{t("nav.blog")}</a
+        >
   </div>
   <div class="flex-row flex-shrink-0 [&>*]:mx-1">
     <a href={githubLink} target="_blank">
