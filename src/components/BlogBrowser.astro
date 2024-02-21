@@ -1,8 +1,9 @@
 ---
+import { Image } from "astro:assets";
+
 import { ui, languages } from "../i18n/ui";
 import { locale } from "../service/language";
 import { useTranslations } from "../i18n/utils";
-import DynamicImage from "./DynamicImage.astro";
 import { getCollection } from "astro:content";
 
 const t = useTranslations(locale.get() as keyof typeof ui);
@@ -10,13 +11,9 @@ let languageCollections = Object.entries(
   (await getCollection("blog")).reduce(function (rv: any, x) {
     let lang = x.slug.split("/")[0];
     (rv[lang] = rv[lang] || []).push(x);
-    //console.log("rv is now ", rv);
     return rv;
   }, {}),
 );
-
-console.log(languageCollections);
-//console.log(Object.entries(languages).map((key, value) => console.log(key)));
 ---
 
 <div class="w-full">
@@ -29,18 +26,81 @@ console.log(languageCollections);
               " " +
               t(("blog." + element[0]) as keyof typeof ui.en)}
           </h2>
-          {(element[1] as any).map((post: any) => (
-            <div id={"display-" + post.id} class={"display-" + element[0]}>
-              <p>{post.id}</p>
-            </div>
-          ))}
-          <button
-            id={"select-" + element[0]}
-            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-            onclick={"selectLanguage(`" + element[0] + "` )"}
-          >
-            {languages[element[0] as keyof typeof languages]}
-          </button>
+          {(element[1] as any)
+            .sort(
+              (a: any, b: any) =>
+                b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+            )
+            .map((post: any) => (
+              <a href={Astro.url.origin + "/" + post.slug}>
+                <div class="w-full lg:flex hidden mb-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
+                  <div
+                    id={"display-" + post.id}
+                    class={"display-" + element[0] + "  w-1/4 max-h-fit "}
+                  >
+                    <Image
+                      class="w-full h-40 object-cover"
+                      src={post.data.image.url}
+                      alt={post.data.image.alt ?? "Preview image"}
+                      width={400}
+                      height={300}
+                    />
+                    <div class="bg-foreground text-white w-full p-4 h-16 flex flex-col justify-center">
+                      {post.data.pubDate.toLocaleDateString(locale.get())}
+                    </div>
+                  </div>
+                  <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+                    <h3 class="my-0 ">{post.data.title}</h3>
+                    <p>Von {post.data.author}</p>
+                    <div class="h-min-fit flex w-full">
+                      {post.data.tags.map((tag: any) => (
+                        <button class="bg-foreground text-white rounded-3xl px-3 py-1 mr-1 text-nowrap">
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
+                    <p class="flex-grow overflow-hidden">
+                      {post.data.description}
+                    </p>
+                    <p>{post.data.description}</p>
+                  </div>
+                </div>
+                <div class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
+                  <div
+                    id={"display-" + post.id}
+                    class={"display-" + element[0] + "  w-full max-h-fit "}
+                  >
+                    <Image
+                      class="w-full h-40 object-cover"
+                      src={post.data.image.url}
+                      alt={post.data.image.alt ?? "Preview image"}
+                      width={400}
+                      height={300}
+                    />
+                    <div class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between">
+                      {post.data.pubDate.toLocaleDateString(locale.get())}
+                      <div class="hidden md:flex">
+                        {post.data.tags.map((tag: any) => (
+                          <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
+                            {tag}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+                    <h3 class="my-0 ">
+                      {post.data.title + " alalalalalalala alalalalalalaal"}
+                    </h3>
+                    <p>Von {post.data.author}</p>
+
+                    <p class="flex-grow overflow-hidden">
+                      {post.data.description}
+                    </p>
+                  </div>
+                </div>
+              </a>
+            ))}
         </div>
       ))
     }
