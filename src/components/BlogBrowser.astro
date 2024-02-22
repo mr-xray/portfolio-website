@@ -1,12 +1,11 @@
 ---
 import { Image } from "astro:assets";
 
-import { ui, languages } from "../i18n/ui";
-import { locale } from "../service/language";
+import { ui } from "../i18n/ui";
+import { determineLocale, locale } from "../service/language";
 import { useTranslations } from "../i18n/utils";
 import { getCollection } from "astro:content";
 
-const t = useTranslations(locale.get() as keyof typeof ui);
 let languageCollections = Object.entries(
   (await getCollection("blog")).reduce(function (rv: any, x) {
     let lang = x.slug.split("/")[0];
@@ -14,106 +13,186 @@ let languageCollections = Object.entries(
     return rv;
   }, {}),
 );
+
+interface Props {
+  page: number;
+  pageSize: number;
+}
+
+const { page, pageSize } = Astro.props;
+determineLocale(Astro.url, Astro.preferredLocale);
+const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
 <div class="w-full">
   <div class="flex flex-wrap">
-    {
-      languageCollections.map((element) => (
-        <div class="w-full ml-15 mb-8 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]">
-          <h2>
-            {t("blog.headline") +
-              " " +
-              t(("blog." + element[0]) as keyof typeof ui.en)}
-          </h2>
-          {(element[1] as any)
-            .sort(
-              (a: any, b: any) =>
-                b.data.pubDate.getTime() - a.data.pubDate.getTime(),
-            )
-            .map((post: any) => (
-              <a href={Astro.url.origin + "/" + post.slug}>
-                <div class="w-full lg:flex hidden mb-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
-                  <div
-                    id={"display-" + post.id}
-                    class={"display-" + element[0] + "  w-1/4 max-h-fit "}
+    <multi-pageable
+      class="w-full"
+      dataSource={JSON.stringify(languageCollections)}
+      pageSize={pageSize}
+      id="pageable"
+    >
+      {
+        languageCollections.map((element) => (
+          <>
+            <div class="w-full ml-15 mb-8 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]">
+              <h2 id={"head-" + element[0]}>
+                {t("blog.headline") +
+                  " " +
+                  t(("blog." + element[0]) as keyof typeof ui.en)}
+              </h2>
+              {(element[1] as any)
+                .sort(
+                  (a: any, b: any) =>
+                    b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+                )
+                .map((post: any, index: number) => (
+                  <a
+                    href={Astro.url.origin + "/" + post.slug}
+                    class={"post-" + element[0]}
+                    data-index={index}
                   >
-                    <Image
-                      class="w-full h-40 object-cover"
-                      src={post.data.image.url}
-                      alt={post.data.image.alt ?? "Preview image"}
-                      width={400}
-                      height={300}
-                    />
-                    <div class="bg-foreground text-white w-full p-4 h-16 flex flex-col justify-center">
-                      {post.data.pubDate.toLocaleDateString(locale.get())}
-                    </div>
-                  </div>
-                  <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
-                    <h3 class="my-0 ">{post.data.title}</h3>
-                    <p>{t("blog.author") + " " + post.data.author}</p>
-                    <div class="h-min-fit flex w-full">
-                      {post.data.tags.map((tag: any) => (
-                        <button class="bg-foreground text-white rounded-3xl px-3 py-1 mr-1 text-nowrap">
-                          {tag}
-                        </button>
-                      ))}
-                    </div>
-                    <p class="flex-grow overflow-hidden">
-                      {post.data.description}
-                    </p>
-                    <p>{post.data.description}</p>
-                  </div>
-                </div>
-                <div class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
-                  <div
-                    id={"display-" + post.id}
-                    class={"display-" + element[0] + "  w-full max-h-fit "}
-                  >
-                    <Image
-                      class="w-full h-40 object-cover"
-                      src={post.data.image.url}
-                      alt={post.data.image.alt ?? "Preview image"}
-                      width={400}
-                      height={300}
-                    />
-                    <div class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between">
-                      {post.data.pubDate.toLocaleDateString(locale.get())}
-                      <div class="hidden md:flex">
-                        {post.data.tags.map((tag: any) => (
-                          <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
-                            {tag}
-                          </button>
-                        ))}
+                    <div class="w-full lg:flex hidden mb-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
+                      <div
+                        id={"display-" + post.id}
+                        class={"display-" + element[0] + "  w-1/4 max-h-fit "}
+                      >
+                        <Image
+                          class="w-full h-40 object-cover"
+                          src={post.data.image.url}
+                          alt={post.data.image.alt ?? "Preview image"}
+                          width={400}
+                          height={300}
+                        />
+                        <div class="bg-foreground text-white w-full p-4 h-16 flex flex-col justify-center">
+                          {post.data.pubDate.toLocaleDateString(locale.get())}
+                        </div>
+                      </div>
+                      <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+                        <h3 class="my-0 ">{post.data.title}</h3>
+                        <p>{t("blog.author") + " " + post.data.author}</p>
+                        <div class="h-min-fit flex w-full">
+                          {post.data.tags.map((tag: any) => (
+                            <button class="bg-foreground text-white rounded-3xl px-3 py-1 mr-1 text-nowrap">
+                              {tag}
+                            </button>
+                          ))}
+                        </div>
+                        <p class="flex-grow overflow-hidden">
+                          {post.data.description}
+                        </p>
+                        <p>{post.data.description}</p>
                       </div>
                     </div>
-                  </div>
-                  <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
-                    <h3 class="my-0 ">
-                      {post.data.title + " alalalalalalala alalalalalalaal"}
-                    </h3>
-                    <p>{t("blog.author") + " " + post.data.author}</p>
-
-                    <p class="flex-grow overflow-hidden">
-                      {post.data.description}
-                    </p>
-                  </div>
-                </div>
-              </a>
-            ))}
-        </div>
-      ))
-    }
+                    <div class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
+                      <div
+                        id={"display-" + post.id}
+                        class={"display-" + element[0] + "  w-full max-h-fit "}
+                      >
+                        <Image
+                          class="w-full h-40 object-cover"
+                          src={post.data.image.url}
+                          alt={post.data.image.alt ?? "Preview image"}
+                          width={400}
+                          height={300}
+                        />
+                        <div class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between">
+                          {post.data.pubDate.toLocaleDateString(locale.get())}
+                          <div class="hidden md:flex">
+                            {post.data.tags.map((tag: any) => (
+                              <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
+                                {tag}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+                        <h3 class="my-0 ">
+                          {post.data.title + " alalalalalalala alalalalalalaal"}
+                        </h3>
+                        <p>{t("blog.author") + " " + post.data.author}</p>
+                        <p class="flex-grow overflow-hidden">
+                          {post.data.description}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              <div class="flex flex-row flex-wrap">
+                {[
+                  ...Array(
+                    Math.ceil((element[1] as any).length / pageSize),
+                  ).keys(),
+                ].map((page) => (
+                  <button
+                    id={"btn-" + element[0] + "-" + page}
+                    onclick={"switchPage('" + element[0] + "', " + page + ")"}
+                    class={
+                      "p-3 mx-0 font-bold transition-all ease-in-out duration-300 pagination-button"
+                    }
+                  >
+                    {page + 1}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        ))
+      }
+    </multi-pageable>
   </div>
-  {
-    languageCollections.map((element) => (
-      <>
-        {(element[1] as any).map((post: any) => (
-          <div id={"display-" + post.id} class={"display-" + element[0]}>
-            <p>{post.id}</p>
-          </div>
-        ))}
-      </>
-    ))
-  }
 </div>
+
+<script is:inline>
+  class MultiPageable extends HTMLElement {
+    source;
+    pageStates;
+    pageSize;
+    constructor() {
+      super();
+      this.pageSize = this.getAttribute("pageSize");
+      this.source = JSON.parse(this.getAttribute("dataSource"));
+      this.pageStates = this.source.reduce((rv, x) => {
+        let lang = x[0];
+        rv[lang] = 0;
+        return rv;
+      }, {});
+      Object.entries(this.pageStates).forEach(([key, value]) =>
+        switchPage(key, value),
+      );
+    }
+  }
+
+  function switchPage(lang, page) {
+    const pageable = document.querySelector("multi-pageable");
+    console.log(
+      "if >= " +
+        page * pageable.pageSize +
+        " and < " +
+        (page + 1) * pageable.pageSize,
+    );
+    [...document.getElementsByClassName("post-" + lang)].forEach((element) =>
+      element.classList.add("hidden"),
+    );
+    visible = [...document.getElementsByClassName("post-" + lang)].filter(
+      (elem) =>
+        elem.dataset.index >= page * pageable.pageSize &&
+        elem.dataset.index < (page + 1) * pageable.pageSize,
+    );
+    visible.forEach((element) => element.classList.remove("hidden"));
+    let currentPageButton = document.getElementById(
+      "btn-" + lang + "-" + pageable.pageStates[lang],
+    );
+    currentPageButton.classList.remove("bg-foreground");
+    currentPageButton.classList.remove("text-white");
+    currentPageButton = document.getElementById("btn-" + lang + "-" + page);
+    currentPageButton.classList.add("bg-foreground");
+    currentPageButton.classList.add("text-white");
+    pageable.pageStates[lang] = page;
+    document
+      .getElementById("head-" + lang)
+      .scrollIntoView({ block: "end", behavior: "smooth" });
+  }
+  customElements.define("multi-pageable", MultiPageable);
+</script>

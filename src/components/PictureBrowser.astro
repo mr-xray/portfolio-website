@@ -1,13 +1,13 @@
 ---
 import { ui } from "../i18n/ui";
-import { locale } from "../service/language";
+import { determineLocale, locale } from "../service/language";
 import { useTranslations } from "../i18n/utils";
 import DynamicImage from "./DynamicImage.astro";
 
 let categories = Object.keys(ui.en).filter((key) => key.startsWith("pics."));
 
 const folderFetchEndpoint = Astro.url.origin + "/api/images/search.json";
-
+determineLocale(Astro.url, Astro.preferredLocale);
 const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 

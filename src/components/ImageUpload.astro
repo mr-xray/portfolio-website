@@ -1,9 +1,6 @@
 ---
 import { ui } from "../i18n/ui";
 import { locale } from "../service/language";
-import { useTranslations } from "../i18n/utils";
-
-const t = useTranslations(locale.get() as keyof typeof ui);
 
 const {
   imageUploadEndpoint = Astro.url.origin + "/api/images/upload.multipart",

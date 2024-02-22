@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { ui } from "../i18n/ui";
-import { locale } from "../service/language";
+import { determineLocale, locale } from "../service/language";
 import { useTranslations } from "../i18n/utils";
 import LanguagePicker from "./LanguagePicker.astro";
 import { Image } from "astro:assets";
@@ -13,6 +13,8 @@ import aboutSVG from "../images/svg/nav/about-icon.svg";
 import imagesSVG from "../images/svg/nav/images-icon.svg";
 import blogSVG from "../images/svg/nav/blog-icon.svg";
 import softwareSVG from "../images/svg/nav/software-icon.svg";
+
+determineLocale(Astro.url, Astro.preferredLocale);
 
 const githubLink = "https://github.com/mr-xray";
 const discordLink = "https://discordapp.com/users/472479669141372943";

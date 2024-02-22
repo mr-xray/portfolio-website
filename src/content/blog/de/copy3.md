@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 pubDate: 2023-02-25
-description: "Lorem "
+description: "Lorem  "
 author: "Bernhard Steirer"
 image:
   url: "https://res.cloudinary.com/demo/image/upload/docs/house.jpg"

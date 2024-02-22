@@ -1,6 +1,5 @@
 ---
 import { locale, determineLocale } from "../service/language";
-let x = 1;
 interface Props {
   title: string;
   description?: string;
@@ -8,6 +7,7 @@ interface Props {
   author?: string;
 }
 determineLocale(Astro.url, Astro.preferredLocale);
+console.log("determined to be " + locale.get());
 const { title, description, keywords, author } = Astro.props;
 ---
 

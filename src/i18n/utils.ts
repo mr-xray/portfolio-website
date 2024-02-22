@@ -1,3 +1,4 @@
+import { determineLocale, locale } from "../service/language";
 import { ui, defaultLang } from "./ui";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
