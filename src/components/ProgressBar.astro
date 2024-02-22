@@ -1,0 +1,26 @@
+---
+interface Props {
+  progress: number;
+  title: string;
+}
+
+const { progress, title } = Astro.props;
+---
+
+<div class="my-2 block">
+  <div
+    class="flex items-center px-2 w-min whitespace-nowrap text-base font-medium bg-foreground text-white"
+  >
+    {title}
+  </div>
+  <div class="relative flex items-center mt-1 w-full">
+    <div
+      style={"width:" + progress + "%;"}
+      class="absolute h-2.5 z-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"
+    >
+    </div>
+    <div class="z-0 w-full rounded-full h-2.5 dark:bg-gray-700">
+      <div class="bg-slate-200 h-2.5 rounded-full" style="width: 100%"></div>
+    </div>
+  </div>
+</div>

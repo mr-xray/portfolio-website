@@ -1,0 +1,77 @@
+---
+import { Image } from "astro:assets";
+interface Props {
+  title: string;
+  date: string;
+  tags: string[];
+  description: string;
+  link: string;
+}
+
+const { title, date, tags, description, link } = Astro.props;
+---
+
+<a href={link} target="_blank">
+  <div
+    class="w-full lg:flex hidden mb-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer"
+  >
+    <div class="w-1/4 max-h-fit">
+      <Image
+        class="w-full h-40 object-cover"
+        src="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+        alt="Preview"
+        width={400}
+        height={300}
+      />
+      <div
+        class="bg-foreground text-white w-full p-4 h-16 flex flex-col justify-center"
+      >
+        {date}
+      </div>
+    </div>
+    <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+      <h3 class="my-0">{title}</h3>
+      <div class="h-min-fit flex w-full">
+        {
+          tags.map((tag) => (
+            <button class="bg-foreground text-white rounded-3xl px-3 py-1 mr-1 text-nowrap">
+              {tag}
+            </button>
+          ))
+        }
+      </div>
+      <p class="flex-grow overflow-hidden">{description}</p>
+    </div>
+  </div>
+  <div
+    class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer"
+  >
+    <div class="w-full max-h-fit">
+      <Image
+        class="w-full h-40 object-cover"
+        src="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+        alt="Preview"
+        width={400}
+        height={300}
+      />
+      <div
+        class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between"
+      >
+        {date}
+        <div class="hidden md:flex">
+          {
+            tags.map((tag) => (
+              <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
+                {tag}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+      <h3 class="my-0">{title}</h3>
+      <p class="flex-grow overflow-hidden">{description}</p>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,100 @@
+---
+import Nav from "../../components/Nav.astro";
+import ProgressBar from "../../components/ProgressBar.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="Let's talk">
+  <Nav />
+  <div class="w-full p-10 bg-gray mx-auto">
+    <div class="w-full flex justify-center">
+      <div class="w-11/12 z-0 flex justify-between lg:flex-row flex-col">
+        <div class="w-full lg:w-4/12 flex flex-col">
+          <div
+            class="w-full ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+          >
+            <h1>Coding as a hobby</h1>
+            <p>
+              For my 5 high school years, I studied computer science in school.
+              My strength lies in Web-Development, whether that be frontend with
+              Angular and Typescript, backend with Java-Spring or databases such
+              as Oracle or MongoDB.
+              <br /><br />Here is a selection of my different projects!
+            </p>
+            <br />
+            <button
+              onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
+              class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+              type="submit">See my projects</button
+            >
+            <br />
+          </div>
+          <div
+            class="w-full my-8 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+          >
+            <h1>Frameworks</h1>
+            Whenever you have an idea, they are ready for you
+            <div class="flex flex-col">
+              <ProgressBar title="SpringBoot" progress={60} />
+              <ProgressBar title="Astro" progress={55} />
+              <ProgressBar title="Angular" progress={75} />
+              <ProgressBar title="Wordpress" progress={35} />
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full lg:w-7/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+        >
+          <h1>Coding skillset</h1>
+          <p>
+            Over the years, I have come in contact with many programming
+            languages.
+            <div class="flex flex-col">
+              <ProgressBar title="Typescript" progress={60} />
+              <ProgressBar title="HTML/CSS" progress={80} />
+              <ProgressBar title="Java" progress={85} />
+              <ProgressBar title="SQL" progress={75} />
+              <ProgressBar title="Python" progress={20} />
+              <ProgressBar title="PHP" progress={30} />
+              <ProgressBar title="Dart (Flutter)" progress={40} />
+              <ProgressBar title="C/C++" progress={25} />
+              <ProgressBar title="Design Patterns" progress={55} />
+              <ProgressBar title="Git" progress={100} />
+              <ProgressBar title="SCRUM" progress={85} />
+              <ProgressBar title="Unit Testing" progress={70} />
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-11/12 mx-auto ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+    >
+      <h1>Projects</h1>
+      <p>
+        This is my selection of projects, together with GitHub source code
+        links.<br /> Most of my projects were school-assignments, unfit to be shown
+        to the public. These ones, however, are pretty nice.<br /> Tell me what you
+        think!
+        <br />
+        <br />
+      </p>
+      <ProjectCard
+        title="Portfolio-Website"
+        date="February 2024"
+        description="The website you are on right now."
+        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
+        link="https://github.com/mr-xray/portfolio-website"
+      />
+      <ProjectCard
+        title="Portfolio-Website"
+        date="February 2024"
+        description="The website you are on right now."
+        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
+        link="https://github.com/mr-xray/portfolio-website"
+      />
+      <div class="flex flex-row flex-wrap"></div>
+    </div>
+  </div>
+</Base>

@@ -49,8 +49,10 @@ const { noLang } = Astro.props;
         >
       </div>
       <div>
+        <a href={getRelativeLocaleUrl(locale.get(), "software")} class="flex">
         <Image src={softwareSVG} alt="<>" width="20" height="20" />
         {t("nav.dev")}
+        </a>
       </div>
       <div>
         <a href={getRelativeLocaleUrl(locale.get(), "images")} class="flex"
