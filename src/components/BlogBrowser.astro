@@ -161,6 +161,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
       Object.entries(this.pageStates).forEach(([key, value]) =>
         switchPage(key, value),
       );
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
 
@@ -192,7 +193,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     pageable.pageStates[lang] = page;
     document
       .getElementById("head-" + lang)
-      .scrollIntoView({ block: "end", behavior: "smooth" });
+      .scrollIntoView({ block: "start", behavior: "smooth" });
   }
   customElements.define("multi-pageable", MultiPageable);
 </script>

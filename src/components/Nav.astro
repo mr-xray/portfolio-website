@@ -40,12 +40,12 @@ const { noLang } = Astro.props;
       <a href={getRelativeLocaleUrl(locale.get(), "/")}>Bernhard Steirer</a>
     </div>
     <div
-      class="hidden lg:flex space-x-12 justify-between [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>div>img]:mx-1"
+      class="hidden lg:flex space-x-12 justify-between [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>div>a>img]:mx-1"
     >
       <div>
-        <Image src={aboutSVG} alt="Person icon" width="20" height="20" />
-        <a href={getRelativeLocaleUrl(locale.get(), "about")}
-          >{t("nav.about")}</a
+        <a href={getRelativeLocaleUrl(locale.get(), "about")} class="flex"
+          ><Image src={aboutSVG} alt="Person icon" width="20" height="20" />
+        {t("nav.about")}</a
         >
       </div>
       <div>
@@ -53,15 +53,16 @@ const { noLang } = Astro.props;
         {t("nav.dev")}
       </div>
       <div>
-        <Image src={imagesSVG} alt="Image icon" width="20" height="20" />
-        <a href={getRelativeLocaleUrl(locale.get(), "images")}
-          >{t("nav.pics")}</a
+        <a href={getRelativeLocaleUrl(locale.get(), "images")} class="flex"
+          ><Image src={imagesSVG} alt="Image icon" width="20" height="20" />
+        {t("nav.pics")}</a
         >
       </div>
       <div>
+        <a href={getRelativeLocaleUrl(locale.get(), "blog")} class="flex"
+          >
         <Image src={blogSVG} alt="Book icon" width="20" height="20" />
-        <a href={getRelativeLocaleUrl(locale.get(), "blog")}
-          >{t("nav.blog")}</a
+        {t("nav.blog")}</a
         >
       </div>
       <div class="flex-row flex-shrink-0 [&>*]:mx-1">
@@ -91,28 +92,33 @@ const { noLang } = Astro.props;
 </div>
 <div
   class="transition-all ease-in-out duration-300 w-80 fixed -top-0 -right-80 invisible z-50 flex flex-col justify-start
-  [&>*]:pl-5 [&>*]:p-2 [&>*]:flex [&>div>img]:mr-2 bg-white min-h-fit h-full text-lg shadow-[-2px_0_15px_0_rgba(0,0,0,0.2)]"
+  [&>*]:pl-5 [&>*]:p-2 [&>*]:flex [&>div>a>img]:mr-2 bg-white min-h-fit h-full text-lg shadow-[-2px_0_15px_0_rgba(0,0,0,0.2)]"
   id="menu"
 >
   <div>
     <i class="text-center fas fa-times cursor-pointer text-xl" id="cancel"></i>
   </div>
   <div>
+    <a href={getRelativeLocaleUrl(locale.get(), "about")} class="flex">
     <Image src={aboutSVG} alt="Person icon" width="20" height="20" />
-    <a href={getRelativeLocaleUrl(locale.get(), "about")}>{t("nav.about")}</a>
+    {t("nav.about")}</a>
   </div>
   <div>
+    <a href={getRelativeLocaleUrl(locale.get(), "software")} class="flex">
     <Image src={softwareSVG} alt="<>" width="20" height="20" />
     {t("nav.dev")}
+    </a>
   </div>
   <div>
+    <a href={getRelativeLocaleUrl(locale.get(), "images")} class="flex">
     <Image src={imagesSVG} alt="Image icon" width="20" height="20" />
-    <a href={getRelativeLocaleUrl(locale.get(), "images")}>{t("nav.pics")}</a>
+    {t("nav.pics")}</a>
   </div>
   <div>
+    <a href={getRelativeLocaleUrl(locale.get(), "blog")} class="flex"
+          >
     <Image src={blogSVG} alt="Book icon" width="20" height="20" />
-    <a href={getRelativeLocaleUrl(locale.get(), "blog")}
-          >{t("nav.blog")}</a
+    {t("nav.blog")}</a
         >
   </div>
   <div class="flex-row flex-shrink-0 [&>*]:mx-1">
