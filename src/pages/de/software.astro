@@ -1,0 +1,107 @@
+---
+import Nav from "../../components/Nav.astro";
+import ProgressBar from "../../components/ProgressBar.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="Software">
+  <Nav />
+  <div class="w-full p-10 bg-gray mx-auto">
+    <div class="w-full flex justify-center">
+      <div class="w-11/12 z-0 flex justify-between lg:flex-row flex-col">
+        <div class="w-full lg:w-4/12 flex flex-col">
+          <div
+            class="w-full ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+          >
+            <h1>Programmieren als Hobby</h1>
+            <p>
+              Während der fünfjährigen Oberstufe (HTL) war Informatik der
+              Ausbildungsschwerpunkt. Die meiste Erfahrung habe ich im
+              Web-Development gesammelt, egal ob Frontend mit Angular und
+              Typescript, im Backend mit Java-Spring oder mit Datenbanken wie
+              Oracle oder MongoDB.
+              <br /><br />Hier eine Auswahl einiger Projekte von mir!
+            </p>
+            <br />
+            <a
+              href="#projects"
+              class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full block text-center"
+              >Projekte ansehen</a
+            >
+            <br />
+          </div>
+          <div
+            class="w-full my-8 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+          >
+            <h1>Frameworks</h1>
+            Mit diesen hier habe ich schon Erfahrung gesammelt.
+            <div class="flex flex-col">
+              <ProgressBar title="SpringBoot" progress={60} />
+              <ProgressBar title="Astro" progress={55} />
+              <ProgressBar title="Angular" progress={75} />
+              <ProgressBar title="Wordpress" progress={35} />
+            </div>
+          </div>
+        </div>
+        <div
+          class="w-full lg:w-7/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+        >
+          <h1>Coding skillset</h1>
+          <p>
+            Über die Jahre habe ich mich mit vielen Programmiersprachen,
+            Prinzipien der Softwareentwicklung und Technologien vertraut
+            gemacht. <br /><br />So manches davon habe ich in der Schule
+            gelernt, anderes in Praktika oder eigenen Projekten.<br /> Hier ist,
+            was ich für relevant halte.
+            <br />
+            <br />
+            <div class="flex flex-col">
+              <ProgressBar title="Typescript" progress={70} />
+              <ProgressBar title="HTML/CSS" progress={80} />
+              <ProgressBar title="Java" progress={85} />
+              <ProgressBar title="SQL" progress={75} />
+              <ProgressBar title="Python" progress={20} />
+              <ProgressBar title="PHP" progress={30} />
+              <ProgressBar title="Dart (Flutter)" progress={40} />
+              <ProgressBar title="C/C++" progress={25} />
+              <ProgressBar title="Design Patterns" progress={55} />
+              <ProgressBar title="Git" progress={100} />
+              <ProgressBar title="SCRUM" progress={85} />
+              <ProgressBar title="Unit Testing" progress={70} />
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-11/12 mx-auto ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+    >
+      <h1 id="projects">Projekte</h1>
+      <p>
+        Dies ist meine Auswahl an relevanten oder lustigen Projekten, für viele
+        auch mit GitHub source code links. <br /> Während die meisten meiner Schulprojekte
+        nicht wirklich interessant sind, sind diese hier ganz nett.
+        <br />
+        Sag mir, was du denkst!
+        <br />
+        <br />
+      </p>
+      <ProjectCard
+        title="Portfolio-Website"
+        date="February 2024"
+        description="The website you are on right now."
+        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
+        link="https://github.com/mr-xray/portfolio-website"
+      />
+      <ProjectCard
+        title="Portfolio-Website"
+        date="February 2024"
+        description="The website you are on right now."
+        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
+        link="https://github.com/mr-xray/portfolio-website"
+      />
+      <div class="flex flex-row flex-wrap"></div>
+    </div>
+  </div>
+</Base>

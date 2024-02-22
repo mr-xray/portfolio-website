@@ -5,7 +5,7 @@ import ProjectCard from "../../components/ProjectCard.astro";
 import Base from "../../layouts/Base.astro";
 ---
 
-<Base title="Let's talk">
+<Base title="Software">
   <Nav />
   <div class="w-full p-10 bg-gray mx-auto">
     <div class="w-full flex justify-center">
@@ -23,10 +23,10 @@ import Base from "../../layouts/Base.astro";
               <br /><br />Here is a selection of my different projects!
             </p>
             <br />
-            <button
-              onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
-              class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-              type="submit">See my projects</button
+            <a
+              href="#projects"
+              class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full block text-center"
+              >See my projects</a
             >
             <br />
           </div>
@@ -34,7 +34,7 @@ import Base from "../../layouts/Base.astro";
             class="w-full my-8 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
           >
             <h1>Frameworks</h1>
-            Whenever you have an idea, they are ready for you
+            Whenever you have an idea, they are ready for you.
             <div class="flex flex-col">
               <ProgressBar title="SpringBoot" progress={60} />
               <ProgressBar title="Astro" progress={55} />
@@ -49,7 +49,8 @@ import Base from "../../layouts/Base.astro";
           <h1>Coding skillset</h1>
           <p>
             Over the years, I have come in contact with many programming
-            languages.
+            languages, principles and technologies. Here are the ones I deem
+            most relevant.
             <div class="flex flex-col">
               <ProgressBar title="Typescript" progress={60} />
               <ProgressBar title="HTML/CSS" progress={80} />
@@ -71,7 +72,7 @@ import Base from "../../layouts/Base.astro";
     <div
       class="w-11/12 mx-auto ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
     >
-      <h1>Projects</h1>
+      <h1 id="projects">Projects</h1>
       <p>
         This is my selection of projects, together with GitHub source code
         links.<br /> Most of my projects were school-assignments, unfit to be shown
