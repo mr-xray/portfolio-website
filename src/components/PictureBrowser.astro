@@ -81,17 +81,24 @@ const t = useTranslations(locale.get() as keyof typeof ui);
       class="text-center fas fa-times cursor-pointer text-3xl"
       id="cancel"
       onclick="closeImageDisplay()"></i>
-    <div class="w-full flex justify-center items-center">
+    <div class="w-full max-h-min flex justify-center items-center">
       <i
         class="text-center mx-4 lg:mx-8 fas fa-caret-left cursor-pointer text-3xl"
-        id="cancel"
-        onclick="closeImageDisplay()"></i>
-      <img id="image-modal" class="w-full object-contain" src="" />
+        id="previous"
+        data-url=""
+        onclick="openLarge(this.dataset.url)"></i>
+      <div>
+        <img
+          id="image-modal"
+          class="w-full max-h-[70%] object-contain"
+          src=""
+        />
+      </div>
       <i
         class="text-center mx-4 lg:mx-8 fas fa-caret-right cursor-pointer text-3xl"
-        id="cancel"
-        onclick="closeImageDisplay()"></i>
-      <br />
+        id="next"
+        data-url=""
+        onclick="openLarge(this.dataset.url)"></i>
     </div>
   </div>
 </div>
@@ -100,10 +107,12 @@ const t = useTranslations(locale.get() as keyof typeof ui);
   const uploadable = document.getElementById("pic-browser");
   var selected;
   var container;
-  var nextCursors = {};
+  var prevUrl;
+  var nextUrl;
+  var browseState = {};
   let categoryButtons = document.getElementsByClassName("select-button");
   for (let btn of categoryButtons) {
-    nextCursors[btn.id] = { hydrated: false, cursor: null };
+    browseState[btn.id] = { hydrated: false, cursor: null, urls: [] };
     if (
       document
         .getElementById("preview-container-" + btn.id.split("-")[1])
@@ -128,7 +137,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     container.classList.add("flex");
     selected.classList.add("bg-foreground");
     selected.classList.add("text-white");
-    if (nextCursors[selected.id].cursor) {
+    if (browseState[selected.id].cursor) {
       document.getElementById("load-more-btn").classList.remove("hidden");
     } else {
       document.getElementById("load-more-btn").classList.add("hidden");
@@ -140,7 +149,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
       ? new URLSearchParams({ category: category, next_cursor: cursor })
       : new URLSearchParams({ category: category });
     showCategoryDisplay(category);
-    if (cursor || !nextCursors["select-" + category].hydrated) {
+    if (cursor || !browseState["select-" + category].hydrated) {
       console.log("hydrating " + category);
       let fillContainer = container.id;
       fetch(uploadable.dataset.url + "?" + urlParams)
@@ -154,9 +163,11 @@ const t = useTranslations(locale.get() as keyof typeof ui);
           if (!cursor) {
             container.innerHTML = "";
           }
-          nextCursors["select-" + category].cursor = data["next_cursor"];
-          nextCursors["select-" + category].hydrated = true;
-          console.log("nextcursors now: ", nextCursors);
+          browseState["select-" + category].cursor = data["next_cursor"];
+          browseState["select-" + category].hydrated = true;
+          browseState["select-" + category].urls.push(...data.urls);
+          console.log("nextcursors now: ", browseState);
+
           displayImages(data.urls, fillContainer);
         })
         .catch((error) => {
@@ -261,7 +272,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         <img class="w-full cursor-pointer" srcset=${constructSrcSet(url)} alt='Personal image' />
       </div>`;
     }
-    if (nextCursors[selected.id].cursor) {
+    if (browseState[selected.id].cursor) {
       document.getElementById("load-more-btn").classList.remove("hidden");
     } else {
       document.getElementById("load-more-btn").classList.add("hidden");
@@ -269,16 +280,25 @@ const t = useTranslations(locale.get() as keyof typeof ui);
   };
 
   const loadMore = () => {
-    let cursor = nextCursors[selected.id].cursor;
+    let cursor = browseState[selected.id].cursor;
     selectCategory(selected.id.split("-")[1], cursor);
   };
 
   const openLarge = (url) => {
+    if (url == "") {
+      return;
+    }
     let fullImg = document.getElementById("image-modal");
     let imageDisplay = document.getElementById("image-display");
     imageDisplay.classList.remove("hidden");
     imageDisplay.classList.add("flex");
     fullImg.src = url;
+    let urls = browseState[selected.id].urls;
+    let index = urls.indexOf(url);
+    document.getElementById("next").dataset.url =
+      index + 1 < urls.length ? urls[index + 1] : "";
+    document.getElementById("previous").dataset.url =
+      index - 1 >= 0 ? urls[index - 1] : "";
   };
   const closeImageDisplay = () => {
     let imageDisplay = document.getElementById("image-display");
