@@ -74,15 +74,25 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 
 <div
   id="image-display"
-  class="hidden px-20 top-0 left-0 max-h-screen fixed overflow-auto w-full h-full z-50 bg-gray/50 justify-center items-center"
+  class="hidden lg:px-20 px-8 top-0 left-0 max-h-screen fixed overflow-auto w-full h-full z-50 bg-gray/50 justify-center items-center"
 >
-  <div class="w-3/4 h-3/4 flex justify-center items-center flex-col">
+  <div class="w-full lg:w-3/4 h-3/4 flex justify-center items-center flex-col">
     <i
       class="text-center fas fa-times cursor-pointer text-3xl"
       id="cancel"
       onclick="closeImageDisplay()"></i>
-    <br />
-    <img id="image-modal" class="w-full h-full object-contain" src="" />
+    <div class="w-full flex justify-center items-center">
+      <i
+        class="text-center mx-4 lg:mx-8 fas fa-caret-left cursor-pointer text-3xl"
+        id="cancel"
+        onclick="closeImageDisplay()"></i>
+      <img id="image-modal" class="w-full object-contain" src="" />
+      <i
+        class="text-center mx-4 lg:mx-8 fas fa-caret-right cursor-pointer text-3xl"
+        id="cancel"
+        onclick="closeImageDisplay()"></i>
+      <br />
+    </div>
   </div>
 </div>
 
