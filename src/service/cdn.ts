@@ -4,7 +4,7 @@ import { atom } from "nanostores";
 let cdn = atom(null as any);
 
 export async function uploadToCloudify(image: File, category: string) {
-  ensureConfig();
+  hydrateConfig();
   let base64 = await fileToBase64(image);
   return await cloudinary.uploader.upload("data:image/png;base64," + base64, {
     folder: import.meta.env.CDN_FOLDER,
@@ -17,16 +17,26 @@ export async function fetchFolder(
   tags: string[],
   resource_type: "image" | "video",
   max_results: number,
+  nextCursor: string | null,
 ) {
-  ensureConfig();
-  return cloudinary.search
+  console.log("next cursor is ", nextCursor);
+  hydrateConfig();
+  let search = cloudinary.search
     .expression(
       `resource_type:${resource_type} AND folder=${folder}` +
         (tags.length > 0 ? " AND tags=" + tags.join(", ") : ""),
     )
     .sort_by("uploaded_at", "desc")
-    .max_results(max_results)
-    .execute();
+    .max_results(max_results);
+  if (nextCursor) {
+    search = search.next_cursor(nextCursor);
+  }
+  return search.execute();
+}
+
+export async function fetchCursor(cursor: string) {
+  hydrateConfig();
+  return cloudinary.search.next_cursor(cursor).execute();
 }
 
 async function fileToBase64(file: File) {
@@ -40,7 +50,7 @@ async function fileToBase64(file: File) {
   return btoa(binary);
 }
 
-function ensureConfig() {
+function hydrateConfig() {
   if (!cdn.get()) {
     const config = cloudinary.config({
       cloud_name: import.meta.env.CDN_CLOUD_NAME,

@@ -171,12 +171,6 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 
   function switchPage(lang, page) {
     const pageable = document.querySelector("multi-pageable");
-    console.log(
-      "if >= " +
-        page * pageable.pageSize +
-        " and < " +
-        (page + 1) * pageable.pageSize,
-    );
     [...document.getElementsByClassName("post-" + lang)].forEach((element) =>
       element.classList.add("hidden"),
     );

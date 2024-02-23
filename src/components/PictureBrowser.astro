@@ -11,9 +11,10 @@ determineLocale(Astro.url, Astro.preferredLocale);
 const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
-<url-uploadable
-  data-url={folderFetchEndpoint}
+<div
   class="w-full border-foreground border"
+  id="pic-browser"
+  data-url={folderFetchEndpoint}
 >
   <div class="w-full">
     <div class="flex flex-wrap">
@@ -29,34 +30,48 @@ const t = useTranslations(locale.get() as keyof typeof ui);
         ))
       }
     </div>
-
-    <div
-      class="w-full flex flex-wrap border-t border-foreground"
-      id="preview-container"
-    >
-      <DynamicImage
-        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
-        altText="house"
-        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
-      />
-      <DynamicImage
-        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
-        altText="house"
-        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
-      />
-      <DynamicImage
-        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
-        altText="house"
-        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3 "
-      />
-      <DynamicImage
-        url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
-        altText="house"
-        classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
-      />
-    </div>
+    {
+      categories.map((category, index, array) => (
+        <>
+          <div
+            class={"category-display w-full flex-wrap border-t border-foreground ".concat(
+              index == 0 ? "flex" : "hidden",
+            )}
+            id={"preview-container-" + category}
+          >
+            <DynamicImage
+              url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+              altText="house"
+              classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
+            />
+            <DynamicImage
+              url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+              altText="house"
+              classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
+            />
+            <DynamicImage
+              url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+              altText="house"
+              classes="lg:w-1/5 p-1 w-1/2 md:w-1/3 "
+            />
+            <DynamicImage
+              url="https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
+              altText="house"
+              classes="lg:w-1/5 p-1 w-1/2 md:w-1/3"
+            />
+          </div>
+        </>
+      ))
+    }
   </div>
-</url-uploadable>
+  <div class="hidden w-full p-1 pt-0" id="load-more-btn">
+    <button
+      class="w-full self-center py-4 px-10 text-nowrap bg-foreground font-bold text-white"
+      onclick="loadMore()">Load more</button
+    >
+  </div>
+</div>
+
 <div
   id="image-display"
   class="hidden px-20 top-0 left-0 max-h-screen fixed overflow-auto w-full h-full z-50 bg-gray/50 justify-center items-center"
@@ -72,42 +87,74 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 </div>
 
 <script is:inline>
-  class Uploadable extends HTMLElement {
-    url;
-    constructor() {
-      super();
-      this.url = this.dataset.url;
+  const uploadable = document.getElementById("pic-browser");
+  var selected;
+  var container;
+  var nextCursors = {};
+  let categoryButtons = document.getElementsByClassName("select-button");
+  for (let btn of categoryButtons) {
+    nextCursors[btn.id] = { hydrated: false, cursor: null };
+    if (
+      document
+        .getElementById("preview-container-" + btn.id.split("-")[1])
+        .classList.contains("flex")
+    ) {
+      container = document.getElementById(
+        "preview-container-" + btn.id.split("-")[1],
+      );
     }
   }
-  customElements.define("url-uploadable", Uploadable);
-
-  const container = document.getElementById("preview-container");
-  const uploadable = document.querySelector("url-uploadable");
-  var selected;
-  const selectCategory = (category) => {
+  const showCategoryDisplay = (category) => {
     if (selected) {
       selected.classList.remove("bg-foreground");
+      document.getElementById("load-more-btn").classList.remove("hidden");
       selected.classList.remove("text-white");
+      container.classList.remove("flex");
+      container.classList.add("hidden");
     }
     selected = document.getElementById("select-" + category);
+    container = document.getElementById("preview-container-" + category);
+    container.classList.remove("hidden");
+    container.classList.add("flex");
     selected.classList.add("bg-foreground");
     selected.classList.add("text-white");
-    fetch(uploadable.url + "?" + new URLSearchParams({ category: category }))
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        container.innerHTML = "";
-        displayImages(data);
-      })
-      .catch((error) => {
-        error.text().then((text) => {
-          console.error("Error: " + text);
+    if (nextCursors[selected.id].cursor) {
+      document.getElementById("load-more-btn").classList.remove("hidden");
+    } else {
+      document.getElementById("load-more-btn").classList.add("hidden");
+    }
+  };
+
+  const selectCategory = (category, cursor) => {
+    let urlParams = cursor
+      ? new URLSearchParams({ category: category, next_cursor: cursor })
+      : new URLSearchParams({ category: category });
+    showCategoryDisplay(category);
+    if (cursor || !nextCursors["select-" + category].hydrated) {
+      console.log("hydrating " + category);
+      let fillContainer = container.id;
+      fetch(uploadable.dataset.url + "?" + urlParams)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          if (!cursor) {
+            container.innerHTML = "";
+          }
+          nextCursors["select-" + category].cursor = data["next_cursor"];
+          nextCursors["select-" + category].hydrated = true;
+          console.log("nextcursors now: ", nextCursors);
+          displayImages(data.urls, fillContainer);
+        })
+        .catch((error) => {
+          error.text().then((text) => {
+            console.error("Error: " + text);
+          });
         });
-      });
+    }
   };
   selectCategory(
     document.getElementsByClassName("select-button")[0].id.split("-")[1],
@@ -197,12 +244,23 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     return urls.join(",\n");
   };
 
-  const displayImages = (urls) => {
+  const displayImages = (urls, id) => {
+    const displayContainer = document.getElementById(id);
     for (let url of urls) {
-      container.innerHTML += `<div class="${classes}" onclick="openLarge('${url}');">
+      displayContainer.innerHTML += `<div class="${classes}" onclick="openLarge('${url}');">
         <img class="w-full cursor-pointer" srcset=${constructSrcSet(url)} alt='Personal image' />
       </div>`;
     }
+    if (nextCursors[selected.id].cursor) {
+      document.getElementById("load-more-btn").classList.remove("hidden");
+    } else {
+      document.getElementById("load-more-btn").classList.add("hidden");
+    }
+  };
+
+  const loadMore = () => {
+    let cursor = nextCursors[selected.id].cursor;
+    selectCategory(selected.id.split("-")[1], cursor);
   };
 
   const openLarge = (url) => {

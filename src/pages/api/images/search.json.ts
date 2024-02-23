@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { fetchFolder } from "../../../service/cdn";
+import { fetchCursor, fetchFolder } from "../../../service/cdn";
 import { ui } from "../../../i18n/ui";
 
 export const GET: APIRoute = async ({ params, request }) => {
@@ -11,7 +11,9 @@ export const GET: APIRoute = async ({ params, request }) => {
       },
     });
   }
-  let category = new URLSearchParams(request.url.split("?")[1]).get("category");
+  let urlParams = new URLSearchParams(request.url.split("?")[1]);
+  let category = urlParams.get("category");
+  let nextCursor = urlParams.get("next_cursor");
   if (
     !category ||
     !Object.keys(ui.en).includes(category) ||
@@ -31,10 +33,13 @@ export const GET: APIRoute = async ({ params, request }) => {
       ["image", category],
       "image",
       10,
+      nextCursor,
     );
-    console.log(cloudinaryResult);
     let urls = cloudinaryResult.resources;
-    urls = urls.map((element: any) => element.secure_url);
+    urls = {
+      urls: urls.map((element: any) => element.secure_url),
+      next_cursor: cloudinaryResult.next_cursor,
+    };
     return new Response(JSON.stringify(urls), {
       status: 200,
       headers: {
