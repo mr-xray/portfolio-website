@@ -3,6 +3,8 @@ import Nav from "../../components/Nav.astro";
 import ProgressBar from "../../components/ProgressBar.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import Base from "../../layouts/Base.astro";
+
+import portfolio from "../../images/png/project_portfolio.png";
 ---
 
 <Base title="Software">
@@ -84,13 +86,15 @@ import Base from "../../layouts/Base.astro";
       <ProjectCard
         title="Portfolio-Website"
         date="February 2024"
-        description="The website you are on right now."
+        image={portfolio}
+        description="The website you are on right now. Designed in Figma and built in a few weeks with Astro in Typescript and Tailwind. Deployed with Vercel. Uses Cloudinary as CDN for the image gallery, new images can also be uploaded online with a password . Uses Astro's content-collections for the Blog and a custom system for multiple languages. Submissions of the contact form are processed via Sendgrid."
         tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
         link="https://github.com/mr-xray/portfolio-website"
       />
       <ProjectCard
         title="Portfolio-Website"
         date="February 2024"
+        image={portfolio}
         description="The website you are on right now."
         tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
         link="https://github.com/mr-xray/portfolio-website"

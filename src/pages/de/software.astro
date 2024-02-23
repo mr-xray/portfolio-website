@@ -3,11 +3,13 @@ import Nav from "../../components/Nav.astro";
 import ProgressBar from "../../components/ProgressBar.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import Base from "../../layouts/Base.astro";
+
+import portfolio from "../../images/png/project_portfolio.png";
 ---
 
 <Base title="Software">
   <Nav />
-  <div class="w-full p-10 bg-gray mx-auto">
+  <div class="w-full p-4 lg:p-10 bg-gray mx-auto">
     <div class="w-full flex justify-center">
       <div class="w-11/12 z-0 flex justify-between lg:flex-row flex-col">
         <div class="w-full lg:w-4/12 flex flex-col">
@@ -45,7 +47,7 @@ import Base from "../../layouts/Base.astro";
           </div>
         </div>
         <div
-          class="w-full lg:w-7/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+          class="w-full mb-8 lg:w-7/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
         >
           <h1>Coding skillset</h1>
           <p>
@@ -75,7 +77,7 @@ import Base from "../../layouts/Base.astro";
       </div>
     </div>
     <div
-      class="w-11/12 mx-auto ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      class="w-11/12 mx-auto ml-15 h-min lg:p-8 p-4 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
     >
       <h1 id="projects">Projekte</h1>
       <p>
@@ -89,14 +91,25 @@ import Base from "../../layouts/Base.astro";
       </p>
       <ProjectCard
         title="Portfolio-Website"
-        date="February 2024"
-        description="The website you are on right now."
-        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
+        date="Februar 2024"
+        image={portfolio}
+        description="Diese Website hier. Designed in Figma und gebaut in wenigen Wochen mit Astro in Typescript und Tailwind. Deployed mit Vercel. Verwendet Cloudinary als CDN für Bildergalerie, Bilder können mit Passwort auch online hochgeladen werden. Verwendet Astros Content-Collections für den Blog und ein eigenes System für die Zweisprachigkeit. Einsendungen über das Kontaktformular werden mittels Sendgrid abgewickelt."
+        tags={[
+          "Astro",
+          "Tailwind",
+          "CDN",
+          "CMS",
+          "TS",
+          "REST",
+          "Vercel",
+          "Sendgrid",
+        ]}
         link="https://github.com/mr-xray/portfolio-website"
       />
       <ProjectCard
         title="Portfolio-Website"
         date="February 2024"
+        image={portfolio}
         description="The website you are on right now."
         tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
         link="https://github.com/mr-xray/portfolio-website"
