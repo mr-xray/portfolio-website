@@ -4,83 +4,110 @@ import { locale } from "../service/language";
 
 const {
   imageUploadEndpoint = Astro.url.origin + "/api/images/upload.multipart",
+  maxUploadMb = 5,
 } = Astro.props;
 ---
 
-<url-uploadable data-url={imageUploadEndpoint}>
-  <form id="upload-form">
-    <fieldset>
-      <legend>Image category:</legend>
-      {
-        Object.entries(ui[locale.get()])
-          .filter(([key, label]) => key.startsWith("pics"))
-          .map(([key, label], index, array) => (
-            <>
-              <div>
-                {index == 0 && (
-                  <input type="radio" name="category" value={key} checked />
-                )}
-                {index != 0 && (
-                  <input type="radio" name="category" value={key} />
-                )}
-                <label for="category">{label}</label>
-              </div>
-            </>
-          ))
-      }
-    </fieldset>
-    <br />
-    <div
-      id="drop-container"
-      class="flex justify-center align-middle items-center h-52 border-foreground border"
-    >
-      <p id="files-selected">Drop here</p>
-    </div>
-    <label for="file"
-      ><div
-        class="p-4 w-min inline-block cursor-pointer my-4 mr-2 bg-foreground font-bold text-white"
-      >
-        Browse
-      </div>
-      <input class="hidden" type="file" id="file" name="file" multiple />
-    </label>
-
-    <label for="post-submit">
-      <div
-        class="p-4 w-min inline-block cursor-pointer my-4 mr-2 bg-foreground font-bold text-white"
-      >
-        Upload
-        <input id="post-submit" type="submit" class="hidden" />
-      </div>
-    </label>
-    <div
-      id="cdn-response"
-      class="hidden p-4 my-4 mr-2 border-foreground border font-bold text-foreground"
-    >
-      <p>Awaiting CDN...</p>
-    </div>
-    <input
-      class="p-4 my-4 mr-2 border-foreground border font-bold text-foreground"
-      type="password"
-      name="password"
-      id="password"
-      placeholder="Enter Secret Code"
-      required
-    />
-  </form>
-</url-uploadable>
-
-<script is:inline>
-  class Uploadable extends HTMLElement {
-    url;
-    constructor() {
-      super();
-      this.url = this.dataset.url;
+<form
+  id="upload-form"
+  method="POST"
+  enctype="multipart/form-data"
+  data-url={imageUploadEndpoint}
+  data-size={maxUploadMb}
+>
+  <fieldset>
+    <legend>Image category:</legend>
+    {
+      Object.entries(ui[locale.get()])
+        .filter(([key, label]) => key.startsWith("pics"))
+        .map(([key, label], index, array) => (
+          <>
+            <div>
+              {index == 0 && (
+                <input type="radio" name="category" value={key} checked />
+              )}
+              {index != 0 && <input type="radio" name="category" value={key} />}
+              <label for="category">{label}</label>
+            </div>
+          </>
+        ))
     }
-  }
-  customElements.define("url-uploadable", Uploadable);
+  </fieldset>
+  <br />
+  <div
+    id="drop-container"
+    class="flex justify-center align-middle items-center h-52 border-foreground border mb-3"
+  >
+    <p id="files-selected">Drop here</p>
+  </div>
+  <label for="file"
+    ><div
+      class="p-4 w-min inline-block cursor-pointer my-1 mr-2 bg-foreground font-bold text-white"
+    >
+      Browse
+    </div>
+    <input class="hidden" type="file" id="file" name="file" multiple />
+  </label>
+
+  <label for="post-submit">
+    <div
+      class="p-4 w-min inline-block cursor-pointer my-1 mr-2 bg-foreground font-bold text-white"
+    >
+      Upload
+      <input id="post-submit" type="submit" class="hidden" />
+    </div>
+  </label>
+  <label for="compression"
+    ><div
+      class="p-4 inline-block cursor-pointer my-1 mr-2 bg-foreground font-bold text-white"
+    >
+      Compress images to {maxUploadMb}MB
+      <input
+        class="ml-3"
+        type="checkbox"
+        id="compression"
+        name="compression"
+        checked
+      />
+    </div>
+  </label>
+
+  <div
+    id="cdn-response"
+    class="hidden p-4 my-1 mr-2 border-foreground border font-bold text-foreground"
+  >
+    <p id="cdn-text">Awaiting CDN...</p>
+  </div>
+  <input
+    class="p-4 my-1 mr-2 border-foreground border font-bold text-foreground"
+    type="password"
+    name="password"
+    id="password"
+    placeholder="Enter Secret Code"
+    required
+  />
+  <div class="w-full hidden" id="compression-display">
+    <p id="compression-counter" class="p-4"></p>
+    <div class="relative flex items-center mt-1 w-full">
+      <div
+        id="compression-progress"
+        style="width:0%;"
+        class="absolute h-2.5 z-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"
+      >
+      </div>
+      <div class="z-0 w-full rounded-full h-2.5 dark:bg-gray-700">
+        <div class="bg-slate-200 h-2.5 rounded-full" style="width: 100%"></div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.1/dist/browser-image-compression.js"
+></script>
+<script is:inline>
   const uploadForm = document.getElementById("upload-form");
-  const uploadable = document.querySelector("url-uploadable");
   const dropContainer = document.getElementById("drop-container");
   const fileDisplay = document.getElementById("files-selected");
   const input = document.getElementById("file");
@@ -88,17 +115,22 @@ const {
   if (input.files?.length != 0) {
     fileDisplay.innerText = input.files?.length + " file(s) selected";
   }
-
+  let compressedFiles;
   uploadForm.addEventListener("submit", async function (e) {
     e.preventDefault();
+    if (!compressFiles && document.getElementById("compression").checked) {
+      compressFiles(input.files);
+    }
     const formData = new FormData(uploadForm);
+    insertCompressedFilesIntoForm(formData, compressedFiles);
     if (input.files?.length == 0) {
       fileDisplay.innerText = "Please select files!";
       return;
     }
+    console.log(formData);
     document.getElementById("cdn-response")?.classList.remove("hidden");
     document.getElementById("cdn-response")?.classList.add("inline-block");
-    fetch(uploadable.url, {
+    fetch(uploadForm.dataset.url, {
       method: "POST",
       headers: {
         Authorization: "Bearer soosasdf",
@@ -132,15 +164,70 @@ const {
   }
   dropContainer.addEventListener("dragover", preventDefault);
   dropContainer.addEventListener("dragenter", preventDefault);
-  dropContainer.addEventListener("drop", (evt) => {
-    document.getElementById("file").files = evt.dataTransfer.files;
+  dropContainer.addEventListener("drop", async (evt) => {
+    input.files = evt.dataTransfer.files;
+    compressFiles(input.files).then((res) => (compressedFiles = res));
     fileDisplay.innerHTML = input.files?.length + " file(s) selected";
     dropContainer.classList.remove("bg-[#bbceb4]");
     evt.preventDefault();
   });
 
   input.addEventListener("change", (event) => {
+    compressFiles(input.files).then((res) => (compressedFiles = res));
     dropContainer.classList.remove("bg-[#bbceb4]");
     fileDisplay.innerHTML = input.files?.length + " file(s) selected";
   });
+
+  async function compressImage(file) {
+    const options = {
+      maxSizeMB: uploadForm.dataset.size,
+      useWebWorker: true,
+      onProgress: (p) =>
+        (document.getElementById("compression-progress").style.width = p + "%"),
+      preserveExif: true,
+    };
+    console.log("compressing to " + uploadForm.dataset.size);
+    return await imageCompression(file, options);
+  }
+
+  async function compressFiles(files) {
+    if (!document.getElementById("compression").checked) {
+      return;
+    }
+    document.getElementById("compression-display").classList.remove("hidden");
+    document.getElementById("compression-display").classList.add("flex");
+    let compressionFinished = [];
+    for (let i = 0; i < files.length; i++) {
+      if (files.item(i).size <= 10485760) {
+        compressionFinished.push(files.item(i));
+        continue;
+      }
+      console.log(files.item(i).name + " too big " + files.item(i).size);
+      try {
+        document.getElementById("compression-counter").innerText =
+          i + 1 + "/" + files.length;
+        let compressed = await compressImage(files.item(i));
+        compressionFinished.push(compressed);
+      } catch (error) {
+        compressionFinished.push(files.item(i));
+        fileDisplay.innerHTML =
+          "Failed to compress file " + i + " of " + files.length;
+      }
+    }
+    document.getElementById("compression-display").classList.remove("flex");
+    document.getElementById("compression-display").classList.add("hidden");
+    return compressionFinished;
+  }
+
+  function insertCompressedFilesIntoForm(form, compressedFiles) {
+    if (form && compressedFiles && compressedFiles.length > 0) {
+      console.log("inserting");
+      form.delete("file");
+      for (let file of compressedFiles) {
+        console.log("   of size " + file.size);
+        form.append("file", file);
+      }
+    }
+    console.log("now ", form);
+  }
 </script>

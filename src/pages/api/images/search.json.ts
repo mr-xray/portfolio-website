@@ -32,6 +32,7 @@ export const GET: APIRoute = async ({ params, request }) => {
       "image",
       10,
     );
+    console.log(cloudinaryResult);
     let urls = cloudinaryResult.resources;
     urls = urls.map((element: any) => element.secure_url);
     return new Response(JSON.stringify(urls), {
