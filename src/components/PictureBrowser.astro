@@ -63,15 +63,13 @@ const t = useTranslations(locale.get() as keyof typeof ui);
       class="text-center fas fa-times cursor-pointer text-3xl"
       id="cancel"
       onclick="closeImageDisplay()"></i>
-    <div class="w-full h-full flex justify-center items-center">
+    <div class="max-w-[95%] max-h-full flex justify-center items-center">
       <i
         class="text-center mx-4 lg:mx-8 fas fa-caret-left cursor-pointer text-3xl"
         id="previous"
         data-url=""
         onclick="openLarge(this.dataset.url)"></i>
-      <div class="h-full">
-        <img id="image-modal" class="w-full h-full object-contain" src="" />
-      </div>
+      <img id="image-modal" class="h-full object-contain" src="" />
       <i
         class="text-center mx-4 lg:mx-8 fas fa-caret-right cursor-pointer text-3xl"
         id="next"
