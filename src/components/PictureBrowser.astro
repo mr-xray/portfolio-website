@@ -13,9 +13,10 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
 <div
-  class="w-full border-foreground border"
+  class="w-full border-foreground border mb-8"
   id="pic-browser"
   data-url={folderFetchEndpoint}
+  data-loading={loadingGIF.src}
 >
   <div class="w-full">
     <div class="flex flex-wrap">
@@ -39,13 +40,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
               index == 0 ? "flex" : "hidden",
             )}
             id={"preview-container-" + category}
-          >
-            {[...Array(10).keys()].map((x) => (
-              <div class="lg:w-1/5 aspect-square p-1 w-1/2 md:w-1/3 flex justify-center items-center">
-                <img class="w-10" src={loadingGIF.src} alt="loading" />
-              </div>
-            ))}
-          </div>
+          />
         </>
       ))
     }
@@ -53,7 +48,8 @@ const t = useTranslations(locale.get() as keyof typeof ui);
   <div class="hidden w-full p-1 pt-0" id="load-more-btn">
     <button
       class="w-full self-center py-4 px-10 text-nowrap bg-foreground font-bold text-white"
-      onclick="loadMore()">Load more</button
+      onclick='selectCategory(selected.id.split("-")[1], browseState[selected.id].cursor);'
+      >Load more</button
     >
   </div>
 </div>
@@ -107,59 +103,20 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     if (selected) {
       selected.classList.remove("bg-foreground");
       document.getElementById("load-more-btn").classList.remove("hidden");
-      selected.classList.remove("text-white");
-      container.classList.remove("flex");
+      selected.classList.remove("text-white", "flex");
       container.classList.add("hidden");
     }
     selected = document.getElementById("select-" + category);
+    selected.classList.add("bg-foreground", "text-white");
     container = document.getElementById("preview-container-" + category);
     container.classList.remove("hidden");
     container.classList.add("flex");
-    selected.classList.add("bg-foreground");
-    selected.classList.add("text-white");
     if (browseState[selected.id].cursor) {
       document.getElementById("load-more-btn").classList.remove("hidden");
     } else {
       document.getElementById("load-more-btn").classList.add("hidden");
     }
   };
-
-  const selectCategory = (category, cursor) => {
-    let urlParams = cursor
-      ? new URLSearchParams({ category: category, next_cursor: cursor })
-      : new URLSearchParams({ category: category });
-    showCategoryDisplay(category);
-    if (cursor || !browseState["select-" + category].hydrated) {
-      console.log("hydrating " + category);
-      let fillContainer = container.id;
-      fetch(uploadable.dataset.url + "?" + urlParams)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        })
-        .then((data) => {
-          if (!cursor) {
-            container.innerHTML = "";
-          }
-          browseState["select-" + category].cursor = data["next_cursor"];
-          browseState["select-" + category].hydrated = true;
-          browseState["select-" + category].urls.push(...data.urls);
-          console.log("nextcursors now: ", browseState);
-
-          displayImages(data.urls, fillContainer);
-        })
-        .catch((error) => {
-          error.text().then((text) => {
-            console.error("Error: " + text);
-          });
-        });
-    }
-  };
-  selectCategory(
-    document.getElementsByClassName("select-button")[0].id.split("-")[1],
-  );
 
   const classes = "lg:w-1/5 p-1 w-1/2 md:w-1/3";
 
@@ -246,6 +203,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
   };
 
   const displayImages = (urls, id) => {
+    hideLoadingIndicators(id);
     const displayContainer = document.getElementById(id);
     for (let url of urls) {
       displayContainer.innerHTML += `<div class="${classes}" onclick="openLarge('${url}');">
@@ -259,9 +217,30 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     }
   };
 
-  const loadMore = () => {
-    let cursor = browseState[selected.id].cursor;
-    selectCategory(selected.id.split("-")[1], cursor);
+  const showLoadingIndicators = (amount, containerId) => {
+    const displayContainer = document.getElementById(containerId);
+    const loadingDiv = document.createElement("div");
+    const loadingImg = document.createElement("img");
+    loadingImg.src = uploadable.dataset.loading;
+    loadingImg.classList.add("w-10");
+    loadingImg.alt = "loading";
+    loadingDiv.className =
+      "lg:w-1/5 aspect-square p-1 w-1/2 md:w-1/3 flex justify-center items-center loading-indicator";
+    loadingDiv.appendChild(loadingImg);
+    for (let i = 0; i < amount; i++) {
+      displayContainer.appendChild(loadingDiv.cloneNode(true));
+    }
+  };
+
+  const hideLoadingIndicators = (containerId) => {
+    const displayContainer = document.getElementById(containerId);
+    let toBeRemoved = [];
+    for (let node of displayContainer.childNodes) {
+      if (node.classList.contains("loading-indicator")) {
+        toBeRemoved.push(node);
+      }
+    }
+    toBeRemoved.forEach((node) => node.remove());
   };
 
   const openLarge = (url) => {
@@ -282,14 +261,12 @@ const t = useTranslations(locale.get() as keyof typeof ui);
       next.dataset.url = urls[index + 1];
       next.classList.remove("invisible");
     } else {
-      console.log("should hide next");
       next.classList.add("invisible");
     }
     if (index - 1 >= 0) {
       prev.dataset.url = urls[index - 1];
       prev.classList.remove("invisible");
     } else {
-      console.log("should hide prev");
       prev.classList.add("invisible");
     }
   };
@@ -299,4 +276,37 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     imageDisplay.classList.remove("flex");
     imageDisplay.classList.add("hidden");
   };
+
+  const selectCategory = (category, cursor) => {
+    let urlParams = cursor
+      ? new URLSearchParams({ category: category, next_cursor: cursor })
+      : new URLSearchParams({ category: category });
+    showCategoryDisplay(category);
+    if (cursor || !browseState["select-" + category].hydrated) {
+      let fillContainer = container.id;
+      showLoadingIndicators(10, fillContainer);
+      fetch(uploadable.dataset.url + "?" + urlParams)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          browseState["select-" + category].cursor = data["next_cursor"];
+          browseState["select-" + category].hydrated = true;
+          browseState["select-" + category].urls.push(...data.urls);
+          displayImages(data.urls, fillContainer);
+        })
+        .catch((error) => {
+          error.text().then((text) => {
+            console.error("Error: " + text);
+          });
+        });
+    }
+  };
+
+  selectCategory(
+    document.getElementsByClassName("select-button")[0].id.split("-")[1],
+  );
 </script>
