@@ -49,7 +49,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
     <button
       class="w-full self-center py-4 px-10 text-nowrap bg-foreground font-bold text-white"
       onclick='selectCategory(selected.id.split("-")[1], browseState[selected.id].cursor);'
-      >Load more</button
+      >{t("picbrowser.load")}</button
     >
   </div>
 </div>

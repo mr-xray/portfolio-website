@@ -14,38 +14,38 @@ const { title, date, image, tags, description, link } = Astro.props;
 
 <a href={link} target="_blank">
   <div
-    class="w-full h-full lg:flex hidden mb-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer"
+    class="w-full lg:flex hidden items-stretch mb-8 border border-foreground shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer"
   >
-    <div class="w-1/4 h-full self-stretch">
+    <div class="min-w-1/4">
       <Image
-        class="w-full h-full object-cover"
+        class="w-full h-[calc(100%-4rem)] object-cover"
         src={image}
         alt="Preview"
         width={400}
         height={300}
       />
       <div
-        class="bg-foreground text-white w-full p-4 h-16 flex flex-col justify-center"
+        class="bg-foreground text-white w-full h-16 p-4 flex flex-col justify-center"
       >
         {date}
       </div>
     </div>
     <div class="w-full px-8 py-4 overflow-hidden flex flex-col">
       <h3 class="my-0">{title}</h3>
-      <div class="h-min-fit flex w-full">
+      <div class="h-min-fit flex w-full flex-wrap">
         {
           tags.map((tag) => (
-            <button class="bg-foreground text-white rounded-3xl px-3 py-1 mr-1 text-nowrap">
+            <button class="bg-foreground text-white rounded-3xl xl:px-3 px-2 py-1 my-0.5 mr-1 text-nowrap">
               {tag}
             </button>
           ))
         }
       </div>
-      <p class="flex-grow overflow-hidden">{description}</p>
+      <p>{description}</p>
     </div>
   </div>
   <div
-    class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer"
+    class="w-full lg:hidden mb-8 flex border border-foreground flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer"
   >
     <div class="w-full max-h-fit">
       <Image
@@ -56,13 +56,13 @@ const { title, date, image, tags, description, link } = Astro.props;
         height={300}
       />
       <div
-        class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between"
+        class="bg-foreground text-white w-full p-4 min-h-16 flex items-center justify-between"
       >
         {date}
-        <div class="hidden md:flex">
+        <div class="hidden md:flex flex-wrap">
           {
             tags.map((tag) => (
-              <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
+              <button class="my-0.5 bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
                 {tag}
               </button>
             ))
@@ -73,6 +73,15 @@ const { title, date, image, tags, description, link } = Astro.props;
     <div class="w-full px-8 py-4 overflow-hidden flex flex-col">
       <h3 class="my-0">{title}</h3>
       <p class="flex-grow">{description}</p>
+      <div class="md:hidden h-min-fit flex w-full flex-wrap">
+        {
+          tags.map((tag) => (
+            <button class="bg-foreground text-white rounded-3xl xl:px-3 px-2 py-1 my-0.5 mr-1 text-nowrap">
+              {tag}
+            </button>
+          ))
+        }
+      </div>
     </div>
   </div>
 </a>

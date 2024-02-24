@@ -5,6 +5,9 @@ import ProjectCard from "../../components/ProjectCard.astro";
 import Base from "../../layouts/Base.astro";
 
 import portfolio from "../../images/png/project_portfolio.png";
+import agent from "../../images/png/project_agent.png";
+import comedy from "../../images/png/project_comedy.png";
+import progen from "../../images/png/project_progen.png";
 ---
 
 <Base title="Software">
@@ -73,35 +76,62 @@ import portfolio from "../../images/png/project_portfolio.png";
         </div>
       </div>
     </div>
-    <div
-      class="w-11/12 mx-auto ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
-    >
-      <h1 id="projects">Projects</h1>
-      <p>
-        This is my selection of projects, together with GitHub source code
-        links.<br /> Most of my projects were school-assignments, unfit to be shown
-        to the public. These ones, however, are pretty nice.<br /> Tell me what you
-        think!
-        <br />
-        <br />
-      </p>
-      <ProjectCard
-        title="Portfolio-Website"
-        date="February 2024"
-        image={portfolio}
-        description="The website you are on right now. Designed in Figma and built in a few weeks with Astro in Typescript and Tailwind. Deployed with Vercel. Uses Cloudinary as CDN for the image gallery, new images can also be uploaded online with a password . Uses Astro's content-collections for the Blog and a custom system for multiple languages. Submissions of the contact form are processed via Sendgrid."
-        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
-        link="https://github.com/mr-xray/portfolio-website"
-      />
-      <ProjectCard
-        title="Portfolio-Website"
-        date="February 2024"
-        image={portfolio}
-        description="The website you are on right now."
-        tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
-        link="https://github.com/mr-xray/portfolio-website"
-      />
-      <div class="flex flex-row flex-wrap"></div>
+    <div class="w-full flex justify-center">
+      <div class="md:w-11/12 w-full px-5">
+        <div
+          class="bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] h-min w-full p-8"
+        >
+          <h1 id="projects">Projects</h1>
+          <p>
+            This is my selection of projects, together with GitHub source code
+            links.<br /> Most of my projects were school-assignments, unfit to be
+            shown to the public. These ones, however, are pretty nice.<br /> Tell
+            me what you think!
+            <br />
+            <br />
+          </p>
+          <ProjectCard
+            title="Portfolio-Website"
+            date="Feb 2024"
+            image={portfolio}
+            description="The website you are on right now. Designed in Figma and built in a few weeks with Astro in Typescript and Tailwind. Deployed with Vercel. Uses Cloudinary as CDN for the image gallery, new images can also be uploaded online with a password . Uses Astro's content-collections for the Blog and a custom system for multiple languages. Submissions of the contact form are processed via Sendgrid."
+            tags={["Astro", "Tailwind", "CDN", "CMS", "TS", "Rest", "Vercel"]}
+            link="https://github.com/mr-xray/portfolio-website"
+          />
+          <ProjectCard
+            title="Java-Agent"
+            date="Mar-Jun 2022"
+            image={agent}
+            description="A java-agent that connects to a SpringBoot backend, which serves a realtime-websocket Angular-Frontend for application monitoring. Collects data such as memory size, CPU-Load, active threads or number of classes in the classloader. Register agents in the frontend for a token that is passed as argument when starting the agent. All monitoring data is additionally saved to local log files."
+            tags={[
+              "Java-Agent",
+              "Angular",
+              "Spring",
+              "Websockets",
+              "Log4j",
+              "JVM",
+            ]}
+            link="https://github.com/mr-xray/java-agent.git"
+          />
+          <ProjectCard
+            title="Comedy-Webapp"
+            date="Nov 2021 - Jun 2022"
+            image={comedy}
+            description="A GPS-based event app, built in Angular and NestJS for a comedy event of comedian Leo Lukas (cancelled due to Covid). GPS-Events are configurable via a JSON-file in the backend. Admin can see events and users and trigger events for them in realtime via websockets. Supports video, image and multiple choice question events. Multiple Choice question statistics are shown live to the admin."
+            tags={["GPS", "OSM", "Websockets", "JWT", "Angular", "NestJS"]}
+            link="https://github.com/mr-xray/comedy-webapp"
+          />
+          <ProjectCard
+            title="Progen-Lab"
+            date="Oct 2022 - Apr 2023"
+            image={progen}
+            description="A small Unity-Based tool for generating DnD-Maps using procedural generation. Supports different biomes, elevation layers and settlements."
+            tags={["Unity", "Procedural generation", "C#"]}
+            link="https://github.com/BrotherSoos/Progen-Labs"
+          />
+          https://github.com/BrotherSoos/Progen-Labs
+        </div>
+      </div>
     </div>
   </div>
 </Base>

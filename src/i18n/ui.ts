@@ -22,6 +22,7 @@ export const ui = {
     "pics.hobbies": "Hobbies",
     "pics.scenery": "Scenery",
     "pics.other": "Other",
+    "picbrowser.load": "Load more",
   },
   de: {
     "blog.headline": "Blog-Artikel auf",
@@ -39,6 +40,7 @@ export const ui = {
     "pics.hobbies": "Hobbys",
     "pics.scenery": "Landschaft",
     "pics.other": "Sonstiges",
+    "picbrowser.load": "Mehr laden",
   },
 } as const;
 
