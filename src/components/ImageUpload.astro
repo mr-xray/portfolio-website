@@ -196,7 +196,7 @@ const {
     document.getElementById("compression-display").classList.add("flex");
     let compressionFinished = [];
     for (let i = 0; i < files.length; i++) {
-      if (files.item(i).size <= 10485760) {
+      if (files.item(i).size <= 1048576 * uploadForm.dataset.size) {
         compressionFinished.push(files.item(i));
         continue;
       }
