@@ -85,42 +85,6 @@ const t = useTranslations(locale.get() as keyof typeof ui);
                           </p>
                         </div>
                       </div>
-                      <div class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
-                        <div
-                          id={"display-" + post.id}
-                          class={
-                            "display-" + element[0] + "  w-full max-h-fit "
-                          }
-                        >
-                          <Image
-                            class="w-full h-40 object-cover"
-                            src={post.data.image.url}
-                            alt={post.data.image.alt ?? "Preview image"}
-                            width={400}
-                            height={300}
-                          />
-                          <div class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between">
-                            {post.data.pubDate.toLocaleDateString(locale.get())}
-                            <div class="hidden md:flex">
-                              {post.data.tags.map((tag: any) => (
-                                <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
-                                  {tag}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
-                          <h3 class="my-0 ">
-                            {post.data.title +
-                              " alalalalalalala alalalalalalaal"}
-                          </h3>
-                          <p>{t("blog.author") + " " + post.data.author}</p>
-                          <p class="flex-grow overflow-hidden">
-                            {post.data.description}
-                          </p>
-                        </div>
-                      </div>
                     </a>
                   ))}
                 <div class="flex flex-row flex-wrap">
@@ -141,6 +105,52 @@ const t = useTranslations(locale.get() as keyof typeof ui);
                   ))}
                 </div>
               </div>
+              {(element[1] as any)
+                .sort(
+                  (a: any, b: any) =>
+                    b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+                )
+                .map((post: any, index: number) => (
+                  <a
+                    href={Astro.url.origin + "/" + post.slug}
+                    class={"post-" + element[0]}
+                    data-index={index}
+                  >
+                    <div class="w-full lg:hidden mb-8 flex flex-col shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] cursor-pointer">
+                      <div
+                        id={"display-" + post.id}
+                        class={"display-" + element[0] + "  w-full max-h-fit "}
+                      >
+                        <Image
+                          class="w-full h-40 object-cover"
+                          src={post.data.image.url}
+                          alt={post.data.image.alt ?? "Preview image"}
+                          width={400}
+                          height={300}
+                        />
+                        <div class="bg-foreground text-white w-full p-4 h-16 flex items-center justify-between">
+                          {post.data.pubDate.toLocaleDateString(locale.get())}
+                          <div class="hidden md:flex">
+                            {post.data.tags.map((tag: any) => (
+                              <button class="bg-gray text-foreground rounded-3xl px-3 py-1 mr-1 text-nowrap">
+                                {tag}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
+                        <h3 class="my-0 ">
+                          {post.data.title + " alalalalalalala alalalalalalaal"}
+                        </h3>
+                        <p>{t("blog.author") + " " + post.data.author}</p>
+                        <p class="flex-grow overflow-hidden">
+                          {post.data.description}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
             </>
           ))
       }
