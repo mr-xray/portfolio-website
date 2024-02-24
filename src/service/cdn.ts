@@ -19,7 +19,6 @@ export async function fetchFolder(
   max_results: number,
   nextCursor: string | null,
 ) {
-  console.log("next cursor is ", nextCursor);
   hydrateConfig();
   let search = cloudinary.search
     .expression(

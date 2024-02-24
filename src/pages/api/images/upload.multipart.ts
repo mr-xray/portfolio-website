@@ -6,7 +6,6 @@ export const POST: APIRoute = async ({ request }) => {
   const formData: FormData = await request.formData();
   let category: string | undefined;
   let password = formData.get("password");
-  console.log("password is + " + password?.toString());
   if (password?.toString() != import.meta.env.CDN_PERMISSION_KEY) {
     return new Response(
       JSON.stringify({

@@ -21,7 +21,6 @@ const { class: className, url, target } = Astro.props;
 let translatedUrl = getRelativeLocaleUrl(locale.get(), url);
 let cutout = translatedUrl.slice(0, translatedUrl.length - 1);
 if (cutout.indexOf("#", cutout.lastIndexOf("/")) >= 0) {
-  console.log("should cut");
   translatedUrl = cutout;
 }
 ---

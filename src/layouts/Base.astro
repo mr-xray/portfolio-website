@@ -7,7 +7,6 @@ interface Props {
   author?: string;
 }
 determineLocale(Astro.url, Astro.preferredLocale);
-console.log("determined to be " + locale.get());
 const { title, description, keywords, author } = Astro.props;
 ---
 

@@ -1,8 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
-import cv from "../../content/cv/resume_software_en.pdf";
+import cv_software from "../../content/cv/resume_software_de.pdf";
+import cv_normal from "../../content/cv/resume_de.pdf";
 import bec from "../../content/cv/bec.pdf";
+import cae from "../../content/cv/cae.pdf";
 ---
 
 <Base title="Über mich">
@@ -54,20 +56,18 @@ import bec from "../../content/cv/bec.pdf";
           <br /> Wer's genau wissen will, hier gibt's die PDFs.
         </p>
         <br />
-        <button
-          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-        >
-          <a href={cv} download="STEIRER_Bernhard_Lebenslauf"
-            >Lebenslauf für Normalos</a
-          >
-        </button>
-        <button
-          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-        >
-          <a href={cv} download="STEIRER_Bernhard_Lebenslauf_Software" class=""
-            >Lebenslauf für Software-Nerds</a
-          >
-        </button>
+        <a href={cv_normal} download="STEIRER_Bernhard_Lebenslauf">
+          <button
+            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+            >Lebenslauf für Normalos
+          </button>
+        </a>
+        <a href={cv_software} download="STEIRER_Bernhard_Lebenslauf_Software">
+          <button
+            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+            >Lebenslauf für Software-Nerds
+          </button>
+        </a>
         <br />
       </div>
       <div
@@ -85,22 +85,20 @@ import bec from "../../content/cv/bec.pdf";
           <br /> PDFs unterhalb zum Download verfügbar.
         </p>
         <br />
-        <button
-          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-        >
-          <a href={cv} download="STEIRER_Bernhard_C1-Advanced_206"
-            >Cambridge C1 Advanced - Score 206</a
-          >
-        </button>
-        <button
-          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-        >
-          <a href={bec} download="STEIRER_Bernhard_BEC_187"
-            >Cambridge B2 BEC Vantage - Score 187</a
-          >
-        </button>
-        <br />
+        <a href={cae} download="STEIRER_Bernhard_C1-Advanced_206">
+          <button
+            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+            >Cambridge C1 Advanced - Score 206
+          </button>
+        </a>
+        <a href={bec} download="STEIRER_Bernhard_BEC_187">
+          <button
+            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+            >Cambridge B2 BEC Vantage - Score 187
+          </button>
+        </a>
       </div>
+      <br />
     </div>
   </div>
 </Base>
