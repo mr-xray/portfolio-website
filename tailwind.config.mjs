@@ -14,6 +14,11 @@ export default {
       white: "#FFFFFF",
       gray: "#F7F8F9",
     },
+    fontSize: {
+      "3xl": ["2rem", "2.25rem"],
+      "4xl": ["2.5rem", "2.75rem"],
+    },
   },
+
   plugins: [],
 };
