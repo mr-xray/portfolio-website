@@ -1,0 +1,13 @@
+---
+const clazz = "w-11/12 md:p-8 pt-8";
+interface Props {
+  class: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div class="w-full flex justify-center bg-gray lg:px-10 lg:py-6 pb-6">
+  <div class={clazz + " " + className}>
+    <slot />
+  </div>
+</div>

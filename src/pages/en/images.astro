@@ -2,14 +2,14 @@
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
 import PictureBrowser from "../../components/PictureBrowser.astro";
+import ResponsiveFrame from "../../layouts/ResponsiveFrame.astro";
 ---
 
 <Base title="Image gallery">
   <Nav />
-
-  <div class="w-full flex-col items-center flex justify-center bg-gray">
+  <ResponsiveFrame class="flex items-center flex-col">
     <div
-      class="mt-8 w-11/12 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      class="w-full h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
     >
       <h1>Image gallery</h1>
       <p>
@@ -19,8 +19,8 @@ import PictureBrowser from "../../components/PictureBrowser.astro";
         The images are organised in categories.
       </p>
     </div>
-    <div class="w-11/12 flex justify-center mx-auto mt-8">
+    <div class="w-full flex justify-center mx-auto mt-8">
       <PictureBrowser />
     </div>
-  </div>
+  </ResponsiveFrame>
 </Base>

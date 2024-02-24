@@ -1,81 +1,78 @@
 ---
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
+import ResponsiveFrame from "../../layouts/ResponsiveFrame.astro";
 ---
 
 <Base title="Let's talk">
   <Nav />
-  <div class="w-full flex justify-center bg-gray">
+  <ResponsiveFrame class="flex justify-between lg:flex-row flex-col">
     <div
-      class="md:w-11/12 w-full z-0 p-10 flex justify-between lg:flex-row flex-col"
+      class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
     >
-      <div
-        class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+      <h1>Lass uns besprechen!</h1>
+      <p>
+        Sag mir, was du denkst. Schreib mir einfach eine Nachricht und lass mich
+        auf dich zukommen. <br /><br />Oder schreib' mir direkt!
+      </p>
+      <br />
+      <button
+        onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
+        class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+        type="submit">Schreib mir eine E-Mail</button
       >
-        <h1>Lass uns besprechen!</h1>
-        <p>
-          Sag mir, was du denkst. Schreib mir einfach eine Nachricht und lass
-          mich auf dich zukommen. <br /><br />Oder schreib' mir direkt!
-        </p>
-        <br />
-        <button
-          onclick="location.href='mailto:bernhard.steirer.4@gmail.com';"
-          class="p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-          type="submit">Schreib mir eine E-Mail</button
-        >
-        <br />
-      </div>
-      <div
-        class="bg-white p-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] lg:w-7/12 h-min w-full lg:mt-0 mt-10"
-        style="opacity: 1; transform: translateY(0%) translateZ(0px);"
-      >
-        <form
-          id="contact-form"
-          class="flex justify-center items-center flex-col gap-4"
-          method="post"
-        >
-          <div class="w-full">
-            <div class="rounded-lg bg-gray">
-              <input
-                class="input w-full resize-none bg-gray border border-medium p-3 text-primary-content"
-                placeholder="Name"
-                autocomplete="off"
-                type="text"
-                value=""
-                name="name"
-              /><div
-                data-lastpass-icon-root="true"
-                style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"
-              >
-              </div>
-            </div>
-          </div><div class="w-full">
-            <div class="rounded-lg bg-gray">
-              <input
-                class="input w-full resize-none bg-gray border border-medium p-3 text-primary-content"
-                placeholder="Email"
-                autocomplete="off"
-                type="email"
-                value=""
-                name="email"
-              />
-            </div>
-          </div><div class="w-full">
-            <textarea
-              class="textarea w-full resize-none bg-gray border border-medium p-3 text-primary-content"
-              name="message"
-              placeholder="Nachricht"
-              rows="5"></textarea>
-          </div><button
-            id="submit-btn"
-            class="p-4 bg-foreground font-bold text-white cursor-pointer w-full"
-            type="submit">Senden</button
-          >
-          <p id="error-text"></p>
-        </form>
-      </div>
+      <br />
     </div>
-  </div>
+    <div
+      class="bg-white p-8 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)] lg:w-7/12 h-min w-full lg:mt-0 mt-10"
+      style="opacity: 1; transform: translateY(0%) translateZ(0px);"
+    >
+      <form
+        id="contact-form"
+        class="flex justify-center items-center flex-col gap-4"
+        method="post"
+      >
+        <div class="w-full">
+          <div class="rounded-lg bg-gray">
+            <input
+              class="input w-full resize-none bg-gray border border-medium p-3 text-primary-content"
+              placeholder="Name"
+              autocomplete="off"
+              type="text"
+              value=""
+              name="name"
+            /><div
+              data-lastpass-icon-root="true"
+              style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"
+            >
+            </div>
+          </div>
+        </div><div class="w-full">
+          <div class="rounded-lg bg-gray">
+            <input
+              class="input w-full resize-none bg-gray border border-medium p-3 text-primary-content"
+              placeholder="Email"
+              autocomplete="off"
+              type="email"
+              value=""
+              name="email"
+            />
+          </div>
+        </div><div class="w-full">
+          <textarea
+            class="textarea w-full resize-none bg-gray border border-medium p-3 text-primary-content"
+            name="message"
+            placeholder="Nachricht"
+            rows="5"></textarea>
+        </div><button
+          id="submit-btn"
+          class="p-4 bg-foreground font-bold text-white cursor-pointer w-full"
+          type="submit">Senden</button
+        >
+        <p id="error-text"></p>
+      </form>
+    </div>
+  </ResponsiveFrame>
 </Base>
 
 <script is:inline>

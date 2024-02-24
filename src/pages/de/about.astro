@@ -5,100 +5,95 @@ import cv_software from "../../content/cv/resume_software_de.pdf";
 import cv_normal from "../../content/cv/resume_de.pdf";
 import bec from "../../content/cv/bec.pdf";
 import cae from "../../content/cv/cae.pdf";
+import ResponsiveFrame from "../../layouts/ResponsiveFrame.astro";
 ---
 
 <Base title="Über mich">
   <Nav />
-  <div class="w-full flex justify-center bg-gray">
+  <ResponsiveFrame class="flex justify-between lg:flex-row flex-col flex-wrap">
     <div
-      class="md:w-11/12 w-full z-0 p-10 flex justify-between lg:flex-row flex-col flex-wrap"
+      class="w-full ml-15 mb-8 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
     >
-      <div
-        class="w-full ml-15 mb-8 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
-      >
-        <h1 class="md:text-4xl text-3xl">Über mich</h1>
-        <p>
-          Mein Name ist Bernhard Steirer.<br />
-          Geboren bin ich am 28.09.2004 in Voitsberg, Österreich (19 Jahre alt).<br
-          />
-          <br />
-          Im Juni 2023 habe ich meine Matura (allgemeine Hochschulreife in Österreich)
-          an der 5-jährigen <a class="underline" href="https://htl-kaindorf.at/"
-            >HTL Kaindorf</a
-          > für Informatik und Betriebswirtschaft abgeschlossen. <br /><br /> Aktuell
-          bin ich in Tansania, wo ich meinen elfmonatigen Zivilersatzdienst als Englischlehrer
-          an einer Primary-School absolviere.
-        </p>
-      </div>
-      <div
-        class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
-      >
-        <h1 class="md:text-4xl text-3xl">Mein Lebenslauf</h1>
-        <p>
-          <ul class="list-disc list-inside">
-            <li>
-              4 Jahre Unterstufe <a
-                class="underline"
-                href="https://www.ahskoeflach.at/">BRG Köflach</a
-              > Realzweig (naturwissentschaftl. Schwerpunkt)
-            </li>
-            <li>
-              5 Jahre Oberstufe
-              <a class="underline" href="https://htl-kaindorf.at/"
-                >HTL Kaindorf</a
-              >
-              für Informatik und Betriebswirtschaft
-            </li>
-            <li>11 Monate Zivilersatzdienst in Tansania</li>
-            <li>Praktika in Softwaredevelopment</li>
-            <li>Physikstudium geplant</li>
-          </ul>
-          <br /> Wer's genau wissen will, hier gibt's die PDFs.
-        </p>
+      <h1 class="md:text-4xl text-3xl">Über mich</h1>
+      <p>
+        Mein Name ist Bernhard Steirer.<br />
+        Geboren bin ich am 28.09.2004 in Voitsberg, Österreich (19 Jahre alt).<br
+        />
         <br />
-        <a href={cv_normal} download="STEIRER_Bernhard_Lebenslauf">
-          <button
-            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-            >Lebenslauf für Normalos
-          </button>
-        </a>
-        <a href={cv_software} download="STEIRER_Bernhard_Lebenslauf_Software">
-          <button
-            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-            >Lebenslauf für Software-Nerds
-          </button>
-        </a>
-        <br />
-      </div>
-      <div
-        class="w-full lg:w-7/12 lg:mt-0 mt-8 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
-      >
-        <h1 class="md:text-4xl text-3xl">Englisch-Zertifizierungen</h1>
-        <p>
-          <ul class="list-disc list-inside">
-            <li>Cambridge C1 Advanced</li>
-            Score 206, Grade A, CEFR Level: C2<br /><br />
-            <li>Cambridge B2 BEC Vantage</li>
-            Business English Certificate<br /> Score 187, Grade A, CEFR Level: C1<br
-            />
-          </ul>
-          <br /> PDFs unterhalb zum Download verfügbar.
-        </p>
-        <br />
-        <a href={cae} download="STEIRER_Bernhard_C1-Advanced_206">
-          <button
-            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-            >Cambridge C1 Advanced - Score 206
-          </button>
-        </a>
-        <a href={bec} download="STEIRER_Bernhard_BEC_187">
-          <button
-            class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
-            >Cambridge B2 BEC Vantage - Score 187
-          </button>
-        </a>
-      </div>
+        Im Juni 2023 habe ich meine Matura (allgemeine Hochschulreife in Österreich)
+        an der 5-jährigen <a class="underline" href="https://htl-kaindorf.at/"
+          >HTL Kaindorf</a
+        > für Informatik und Betriebswirtschaft abgeschlossen. <br /><br /> Aktuell
+        bin ich in Tansania, wo ich meinen elfmonatigen Zivilersatzdienst als Englischlehrer
+        an einer Primary-School absolviere.
+      </p>
+    </div>
+    <div
+      class="w-full lg:w-4/12 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+    >
+      <h1 class="md:text-4xl text-3xl">Mein Lebenslauf</h1>
+      <p>
+        <ul class="list-disc list-inside">
+          <li>
+            4 Jahre Unterstufe <a
+              class="underline"
+              href="https://www.ahskoeflach.at/">BRG Köflach</a
+            > Realzweig (naturwissentschaftl. Schwerpunkt)
+          </li>
+          <li>
+            5 Jahre Oberstufe
+            <a class="underline" href="https://htl-kaindorf.at/">HTL Kaindorf</a
+            >
+            für Informatik und Betriebswirtschaft
+          </li>
+          <li>11 Monate Zivilersatzdienst in Tansania</li>
+          <li>Praktika in Softwaredevelopment</li>
+          <li>Physikstudium geplant</li>
+        </ul>
+        <br /> Wer's genau wissen will, hier gibt's die PDFs.
+      </p>
+      <br />
+      <a href={cv_normal} download="STEIRER_Bernhard_Lebenslauf">
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+          >Lebenslauf für Normalos
+        </button>
+      </a>
+      <a href={cv_software} download="STEIRER_Bernhard_Lebenslauf_Software">
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+          >Lebenslauf für Software-Nerds
+        </button>
+      </a>
       <br />
     </div>
-  </div>
+    <div
+      class="w-full lg:w-7/12 lg:mt-0 my-8 ml-15 h-min p-8 bg-white shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]"
+    >
+      <h1 class="md:text-4xl text-3xl">Englisch-Zertifizierungen</h1>
+      <p>
+        <ul class="list-disc list-inside">
+          <li>Cambridge C1 Advanced</li>
+          Score 206, Grade A, CEFR Level: C2<br /><br />
+          <li>Cambridge B2 BEC Vantage</li>
+          Business English Certificate<br /> Score 187, Grade A, CEFR Level: C1<br
+          />
+        </ul>
+        <br /> PDFs unterhalb zum Download verfügbar.
+      </p>
+      <br />
+      <a href={cae} download="STEIRER_Bernhard_C1-Advanced_206">
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+          >Cambridge C1 Advanced - Score 206
+        </button>
+      </a>
+      <a href={bec} download="STEIRER_Bernhard_BEC_187">
+        <button
+          class="mt-5 p-4 mr-2 bg-foreground font-bold text-white cursor-pointer w-full"
+          >Cambridge B2 BEC Vantage - Score 187
+        </button>
+      </a>
+    </div>
+  </ResponsiveFrame>
 </Base>
