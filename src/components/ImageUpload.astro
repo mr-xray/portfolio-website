@@ -4,6 +4,7 @@ import { locale } from "../service/language";
 
 const {
   imageUploadEndpoint = Astro.url.origin + "/api/images/upload.multipart",
+  signatureEndpoint = Astro.url.origin + "/api/images/signature.json",
   maxUploadMb = 5,
 } = Astro.props;
 ---
@@ -13,6 +14,7 @@ const {
   method="POST"
   enctype="multipart/form-data"
   data-url={imageUploadEndpoint}
+  data-signature={signatureEndpoint}
   data-size={maxUploadMb}
 >
   <fieldset>
@@ -76,7 +78,7 @@ const {
     id="cdn-response"
     class="hidden p-4 my-1 mr-2 border-foreground border font-bold text-foreground"
   >
-    <p id="cdn-text">Awaiting CDN...</p>
+    <p id="cdn-text">Uploading to CDN...</p>
   </div>
   <input
     class="p-4 my-1 mr-2 border-foreground border font-bold text-foreground"
@@ -110,6 +112,7 @@ const {
   const uploadForm = document.getElementById("upload-form");
   const dropContainer = document.getElementById("drop-container");
   const fileDisplay = document.getElementById("files-selected");
+  const cdnResponse = document.getElementById("cdn-response");
   const input = document.getElementById("file");
 
   if (input.files?.length != 0) {
@@ -118,22 +121,21 @@ const {
   let compressedFiles;
   uploadForm.addEventListener("submit", async function (e) {
     e.preventDefault();
-    if (!compressFiles && document.getElementById("compression").checked) {
-      compressFiles(input.files);
+    if (!compressedFiles && document.getElementById("compression").checked) {
+      compressedFiles = await compressFiles(input.files);
     }
-    const formData = new FormData(uploadForm);
-    insertCompressedFilesIntoForm(formData, compressedFiles);
     if (input.files?.length == 0) {
       fileDisplay.innerText = "Please select files!";
       return;
     }
-    document.getElementById("cdn-response")?.classList.remove("hidden");
-    document.getElementById("cdn-response")?.classList.add("inline-block");
-    fetch(uploadForm.dataset.url, {
+    cdnResponse.classList.remove("hidden");
+    cdnResponse.classList.add("inline-block");
+    const category = document.querySelector(
+      'input[name="category"]:checked',
+    ).value;
+    upload(compressedFiles, category);
+    /*fetch(uploadForm.dataset.url, {
       method: "POST",
-      headers: {
-        Authorization: "Bearer soosasdf",
-      },
       body: formData,
     })
       .then((response) => {
@@ -155,7 +157,7 @@ const {
         error
           .json()
           .then((msg) => (fileDisplay.innerHTML = "Error: " + msg.message));
-      });
+      });*/
   });
 
   function preventDefault(evt) {
@@ -216,10 +218,61 @@ const {
     return compressionFinished;
   }
 
-  function insertCompressedFilesIntoForm(form, compressedFiles) {
-    if (form && compressedFiles && compressedFiles.length > 0) {
-      form.delete("file");
-      compressedFiles.forEach((file) => form.append("file", file));
+  async function requestSignature(category) {
+    let password = document.getElementById("password").value;
+    try {
+      let response = await fetch(uploadForm.dataset.signature, {
+        method: "POST",
+        body: JSON.stringify({ password: password, category: category }),
+      });
+
+      if (!response.ok) {
+        throw response;
+      }
+      return await response.json();
+    } catch (error) {
+      const msg = await error.json();
+      fileDisplay.innerHTML = "Error: " + msg.message;
     }
+  }
+
+  async function upload(files, category) {
+    const signData = await requestSignature(category);
+    if (!signData) {
+      return;
+    }
+    const url =
+      "https://api.cloudinary.com/v1_1/" + signData.cloudname + "/auto/upload";
+    const formData = new FormData();
+    fileDisplay.innerHTML = "";
+
+    for (let file of files) {
+      formData.append("api_key", signData.apikey);
+      formData.append("file", file);
+      formData.append("signature", signData.signature);
+      formData.append("folder", signData.folder);
+      formData.append("tags", category + ", image");
+      formData.append("timestamp", signData.timestamp);
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw response;
+          }
+          return response.json();
+        })
+        .then((data) => {
+          fileDisplay.innerHTML += data.asset_id + "<br/>";
+        })
+        .catch((error) => {
+          ok = false;
+          error
+            .json()
+            .then((msg) => (fileDisplay.innerHTML = "Error: " + msg.message));
+        });
+    }
+    cdnResponse.classList.add("hidden");
   }
 </script>

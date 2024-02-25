@@ -12,6 +12,25 @@ export async function uploadToCloudify(image: File, category: string) {
   });
 }
 
+export async function generateSignature(category: string) {
+  hydrateConfig();
+  const timestamp = Math.round(new Date().getTime() / 1000);
+  const folder = import.meta.env.CDN_FOLDER;
+  const tags = category + ", image";
+  let payload = {
+    timestamp: timestamp,
+    folder: folder,
+    tags: tags,
+  };
+  console.log(payload);
+
+  const signature = await cloudinary.utils.api_sign_request(
+    payload,
+    cloudinary.config().api_secret!,
+  );
+  return { timestamp, signature, folder, tags };
+}
+
 export async function fetchFolder(
   folder: string,
   tags: string[],
@@ -22,8 +41,9 @@ export async function fetchFolder(
   hydrateConfig();
   let search = cloudinary.search
     .expression(
-      `resource_type:${resource_type} AND folder=${folder}` +
-        (tags.length > 0 ? " AND tags=" + tags.join(", ") : ""),
+      `folder=${folder}` +
+        ` AND resource_type:${resource_type}` +
+        tags.map((tag) => " AND tags=" + tag).reduce((acc, v) => acc + v),
     )
     .sort_by("uploaded_at", "desc")
     .max_results(max_results);

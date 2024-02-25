@@ -36,6 +36,7 @@ export const GET: APIRoute = async ({ params, request }) => {
       nextCursor,
     );
     let urls = cloudinaryResult.resources;
+    console.log((urls as Array<any>).map((x) => x.folder));
     urls = {
       urls: urls.map((element: any) => element.secure_url),
       next_cursor: cloudinaryResult.next_cursor,
