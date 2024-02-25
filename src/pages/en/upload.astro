@@ -1,5 +1,6 @@
 ---
 import ImageUpload from "../../components/ImageUpload.astro";
+import Nav from "../../components/Nav.astro";
 import { ui } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
 import Base from "../../layouts/Base.astro";
@@ -9,6 +10,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
 ---
 
 <Base title="Image upload">
+  <Nav />
   <div class="flex w-full justify-center mt-10">
     <div class="w-4/5 bg-white p-4 shadow-[2px_4px_12px_0_rgba(0,0,0,0.2)]">
       <h1

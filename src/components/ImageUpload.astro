@@ -134,30 +134,6 @@ const {
       'input[name="category"]:checked',
     ).value;
     upload(compressedFiles, category);
-    /*fetch(uploadForm.dataset.url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        document.getElementById("cdn-response")?.classList.add("hidden");
-        document
-          .getElementById("cdn-response")
-          ?.classList.remove("inline-block");
-        if (response.ok) {
-          dropContainer.classList.add("bg-[#bbceb4]");
-          fileDisplay.innerHTML = "";
-          return response.json();
-        }
-        throw response;
-      })
-      .then((result) => {
-        fileDisplay.innerHTML = result.join("<br/>");
-      })
-      .catch((error) => {
-        error
-          .json()
-          .then((msg) => (fileDisplay.innerHTML = "Error: " + msg.message));
-      });*/
   });
 
   function preventDefault(evt) {

@@ -15,6 +15,8 @@ export default {
       gray: "#F7F8F9",
     },
     fontSize: {
+      lg: ["1.125rem", "1.75rem"],
+      xl: ["1.25rem", "1.65rem"],
       "2xl": ["1.75rem", "2rem"],
       "3xl": ["2rem", "2.25rem"],
       "4xl": ["2.5rem", "2.75rem"],

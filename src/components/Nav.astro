@@ -43,25 +43,25 @@ const { noLang } = Astro.props;
       class="hidden lg:flex space-x-12 justify-between [&>*]:flex [&>*]:items-center [&>*]:justify-center [&>div>a>img]:mx-1"
     >
       <div>
-        <a href={getRelativeLocaleUrl(locale.get(), "about")} class="flex"
+        <a href={getRelativeLocaleUrl(locale.get(), "about")} class="flex  "
           ><Image src={aboutSVG} alt="Person icon" width="20" height="20" />
         {t("nav.about")}</a
         >
       </div>
       <div>
-        <a href={getRelativeLocaleUrl(locale.get(), "software")} class="flex">
+        <a href={getRelativeLocaleUrl(locale.get(), "software")} class="flex ">
         <Image src={softwareSVG} alt="<>" width="20" height="20" />
         {t("nav.dev")}
         </a>
       </div>
       <div>
-        <a href={getRelativeLocaleUrl(locale.get(), "images")} class="flex"
+        <a href={getRelativeLocaleUrl(locale.get(), "images")} class="flex "
           ><Image src={imagesSVG} alt="Image icon" width="20" height="20" />
         {t("nav.pics")}</a
         >
       </div>
       <div>
-        <a href={getRelativeLocaleUrl(locale.get(), "blog")} class="flex"
+        <a href={getRelativeLocaleUrl(locale.get(), "blog")} class="flex "
           >
         <Image src={blogSVG} alt="Book icon" width="20" height="20" />
         {t("nav.blog")}</a
@@ -94,7 +94,7 @@ const { noLang } = Astro.props;
 </div>
 <div
   class="transition-all ease-in-out duration-300 w-80 fixed -top-0 -right-80 invisible z-50 flex flex-col justify-start
-  [&>*]:pl-5 [&>*]:p-2 [&>*]:flex [&>div>a>img]:mr-2 bg-white min-h-fit h-full text-lg shadow-[-2px_0_15px_0_rgba(0,0,0,0.2)]"
+  [&>*]:pl-5 [&>*]:p-2 [&>*]:flex [&>div>a>img]:mr-2 bg-white min-h-fit h-full text-xl shadow-[-2px_0_15px_0_rgba(0,0,0,0.2)]"
   id="menu"
 >
   <div>

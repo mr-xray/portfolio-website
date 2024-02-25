@@ -10,7 +10,9 @@ const langu = locale.get();
   Object.entries(languages).map(([lang, label], index, array) => (
     <>
       <a
-        class={langu == lang ? "font-bold" : undefined}
+        class={
+          "lg:text-lg text-xl " + (langu == lang ? "font-bold" : "font-normal")
+        }
         href={translateURL(Astro.url, lang as keyof typeof ui)}
       >
         {label}
