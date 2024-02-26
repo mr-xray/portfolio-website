@@ -9,7 +9,9 @@ import { getCollection } from "astro:content";
 let languageCollections = Object.entries(
   (await getCollection("blog")).reduce(function (rv: any, x) {
     let lang = x.slug.split("/")[0];
-    (rv[lang] = rv[lang] || []).push(x);
+    if (!x.data.isDraft) {
+      (rv[lang] = rv[lang] || []).push(x);
+    }
     return rv;
   }, {}),
 );
@@ -140,9 +142,7 @@ const t = useTranslations(locale.get() as keyof typeof ui);
                         </div>
                       </div>
                       <div class="w-full max-h-52 px-8 py-4 overflow-hidden flex flex-col">
-                        <h3 class="my-0 ">
-                          {post.data.title + " alalalalalalala alalalalalalaal"}
-                        </h3>
+                        <h3 class="my-0 ">{post.data.title}</h3>
                         <p>{t("blog.author") + " " + post.data.author}</p>
                         <p class="flex-grow overflow-hidden">
                           {post.data.description}

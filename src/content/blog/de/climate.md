@@ -1,7 +1,8 @@
 ---
-title: "Introduction"
+title: "Klima"
+isDraft: true
 pubDate: 2023-02-21
-description: "Lorem  "
+description: "not ready yet"
 author: "Bernhard Steirer"
 image:
   url: "https://res.cloudinary.com/demo/image/upload/docs/house.jpg"

@@ -1,7 +1,8 @@
 ---
-title: "Introduction"
+title: "Wirtschaft und Wohlstand"
+isDraft: true
 pubDate: 2023-02-25
-description: "Lorem"
+description: "not yet  "
 author: "Bernhard Steirer"
 image:
   url: "https://res.cloudinary.com/demo/image/upload/docs/house.jpg"
