@@ -18,7 +18,7 @@ export const ui = {
     "nav.blog": "Blog",
     //"pics.me": "Me & Friends",
     "pics.tanzania": "Tanzania",
-    "pics.pets": "Pets",
+    "pics.pets": "Animals",
     "pics.hobbies": "Hobbies",
     "pics.scenery": "Scenery",
     "pics.other": "Other",
