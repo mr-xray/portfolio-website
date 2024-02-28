@@ -1,7 +1,7 @@
 ---
 title: "Sprachen in Ostafrika"
 isDraft: false
-pubDate: 2023-02-25
+pubDate: 2024-02-25
 description: "Welche Rollen spielen traditionelle Stammessprachen im Alltag, können sich Leute verständigen? Welche Sprachen lernen Kinder in der Schule und wie sieht es neben Tansania in z.B. Kenia oder Uganda aus? Auch Englisch im Speziellen und wie verbreitet es in verschiedenen Ländern ist wird behandelt."
 author: "Bernhard Steirer"
 image:
@@ -12,9 +12,9 @@ tags: ["Culture", "East-Africa", "Tanzania", "Tribalism"]
 
 Die Meisten haben es schon mal probiert: Eine neue Sprache lernen. Mit Duolingo und Google-Translate ist das Sprachenlernen heute leichter und vor allem zugänglicher denn je.
 
-Seit ich hier in Tansania angekommen bin, gehört Swahili zu meinem Alltag. Wirklich gut darin bin ich dennoch nicht. Ich denke, dass ich mich nach einigen Monaten des Scheiterns aber zumindest damit abgefunden habe.
+Seit ich hier in Tansania angekommen bin, gehört Swahili auch zu meinem Alltag. Wirklich gut darin bin ich dennoch nicht. Ich denke, dass ich mich nach einigen Monaten des Scheiterns aber zumindest damit abgefunden habe.
 
-Swahili / Suaheli oder Kiswahili, wie die Sprache sich selbst bezeichnet, ist offizielle Amtssprache in 4 Ländern: Tansania, Kenia, Uganda und der DR Kongo. In allen Ländern gibt es aber weitere Amtssprachen: Französisch in der DR Kongo und Englisch in den anderen Ländern.
+Swahili / Suaheli oder Kiswahili, wie die Sprache sich selbst bezeichnet, ist offizielle Amtssprache in 4 Ländern: Tansania, Kenia, Uganda und der DR Kongo. In allen Ländern gibt es aber weitere Amtssprachen: Französisch in der DR Kongo und Englisch in Tansania, Kenia und Uganda.
 
 ### Stammessprachen (Tribal Languages)
 
