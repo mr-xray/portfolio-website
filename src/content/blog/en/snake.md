@@ -1,5 +1,5 @@
 ---
-title: "A snake bit my dog and almost killed it"
+title: "A snake bit my dog"
 isDraft: false
 pubDate: 2024-02-27
 description: "In November, a deadly cobra entered my dogs' enclosure and bit my female puppy Jane. Against all the odds, she survived the initial bite, but that's only where the real struggle began."

@@ -22,8 +22,6 @@ export async function generateSignature(category: string) {
     folder: folder,
     tags: tags,
   };
-  console.log(payload);
-
   const signature = await cloudinary.utils.api_sign_request(
     payload,
     cloudinary.config().api_secret!,
